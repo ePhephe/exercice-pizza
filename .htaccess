@@ -1,7 +1,21 @@
 RewriteEngine On
 
+# Bloquer l'accès à tout le contenu dans public/files/
+RewriteRule ^public/files/(.*)$ - [F,L]
+# Bloquer l'accès à tout le contenu dans src/
+RewriteRule ^src/(.*)$ - [F,L]
+
+# Permettre l'accès au répertoire public/files/img
+RewriteRule ^public/files/img(/.*)?$ - [L]
+
+# Redirige toutes les requêtes avec un nom de page vers index.php avec le paramètre page
+RewriteRule _controller_test.php _controller_test.php [L,QSA]
+
 # Redirige toutes les requêtes sans nom de page fourni vers index.php sans paramètre
 RewriteRule ^$ index.php [L,QSA]
 
 # Redirige toutes les requêtes avec un nom de page vers index.php avec le paramètre page
 RewriteRule ^([^/]+).php$ index.php?page=$1 [L,QSA]
+
+# Redirige toutes les requêtes sans nom de page fourni vers index.php sans paramètre
+RewriteRule ^(.*)$ index.php?error=notfound [L,QSA]

@@ -3,8 +3,6 @@
 /**
  * 
  * Attributs disponibles
- * @property $table Nom de la table du champ
- * @property $champ_id Clé de la table
  * @property $fieldLogin Champ du login clé de connexion d'un utilisateur
  * @property $fieldPassword Champ du password clé de connexion d'un utilisateur
  * @property $fieldSelectorToken Champ clé de sélection du token (réini de mot de passe)
@@ -34,10 +32,6 @@ class utilisateur extends _model {
      * Attributs
      */
 
-    // Nom de la table dans la BDD
-    protected $table = "utilisateur";
-    // Clé de la table
-    protected $champ_id = "u_id";
     // Nom des champs clés de connexion d'un utilisateur
     protected $fieldLogin = "u_email";
     protected $fieldPassword = "u_password";

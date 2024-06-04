@@ -1,0 +1,148 @@
+{
+    "type": "modele",
+    "table": "ingredient",
+    "champ_id": "i_id",
+    "links": [
+        {
+            "table": "piecejointe",
+            "cle": "i_ref_piecejointe_photo"
+        }
+    ],
+    "fields": [
+        {
+            "name": "i_nom",
+            "type": "text",
+            "libelle": "Ingrédient : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "i_nom",
+                "id": "i_nom",
+                "placeholder": "Nom de l'ingrédient",
+                "type": "text",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "min_length": 1,
+                "max_length": 100
+            }
+        },
+        {
+            "name": "i_description",
+            "type": "text",
+            "libelle": "Description : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "i_description",
+                "id": "i_description",
+                "placeholder": "Description de l'ingrédient pour le client ",
+                "type": "textarea",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "min_length": 1,
+                "max_length": 300
+            }
+        },
+        {
+            "name": "i_type",
+            "type": "text",
+            "libelle": "Type : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "i_type",
+                "id": "i_type",
+                "placeholder": "Choisissez le type d'ingrédient ",
+                "type": "select",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "listeCleValeur": [
+                {
+                    "cle": "T",
+                    "valeur": "Taille"
+                },
+                {
+                    "cle": "P",
+                    "valeur": "Type de pâte"
+                },
+                {
+                    "cle": "B",
+                    "valeur": "Base"
+                },
+                {
+                    "cle": "I",
+                    "valeur": "Ingrédients"
+                }
+            ]
+        },
+        {
+            "name": "i_prix",
+            "type": "float",
+            "libelle": "Prix de l'ingrédient : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "i_prix",
+                "id": "i_prix",
+                "placeholder": "",
+                "type": "number",
+                "step": "0.01",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "min": 0.01,
+                "max": 999.99
+            }
+        },
+        {
+            "name": "i_ref_piecejointe_photo",
+            "type": "integer",
+            "libelle": "Photo de l'ingrédient : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "i_ref_piecejointe_photo",
+                "id": "i_ref_piecejointe_photo",
+                "placeholder": "",
+                "type": "file",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "size": 10000
+            }
+        }
+    ],
+    "actions": [
+        {
+            "action": "create",
+            "url": "creer_ingredient"
+        },
+        {
+            "action": "read",
+            "url": "detail_ingredient"
+        },
+        {
+            "action": "update",
+            "url": "modifier_ingredient"
+        },
+        {
+            "action": "delete",
+            "url": "supprimer_ingredient"
+        },
+        {
+            "action": "list",
+            "url": "lister_ingredient"
+        }
+    ]
+}

@@ -1,0 +1,168 @@
+{
+    "type": "modele",
+    "table": "pizza",
+    "champ_id": "p_id",
+    "links": [
+        {
+            "table": "utilisateur",
+            "cle": "p_ref_utilisateur_createur"
+        },
+        {
+            "table": "piecejointe",
+            "cle": "p_ref_piecejointe_photo"
+        }
+    ],
+    "fields": [
+        {
+            "name": "p_nom",
+            "type": "text",
+            "libelle": "Nom de la pizza : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "p_nom",
+                "id": "p_nom",
+                "placeholder": "Soyez créatif !",
+                "type": "text",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "min_length": 1,
+                "max_length": 100
+            }
+        },
+        {
+            "name": "p_description",
+            "type": "text",
+            "libelle": "Descrivez votre pizza : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "p_description",
+                "id": "p_description",
+                "placeholder": "Là aussi, soyez imaginatif ! ",
+                "type": "textarea",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "min_length": 1,
+                "max_length": 300
+            }
+        },
+        {
+            "name": "p_statut",
+            "type": "text",
+            "libelle": "Statut : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "listeCleValeur": [
+                {
+                    "cle": "C",
+                    "valeur": "Créée"
+                },
+                {
+                    "cle": "EC",
+                    "valeur": "En cours de création"
+                },
+                {
+                    "cle": "T",
+                    "valeur": "Terminé"
+                },
+                {
+                    "cle": "C",
+                    "valeur": "Commandé"
+                }
+            ]
+        },
+        {
+            "name": "p_ref_piecejointe_photo",
+            "type": "integer",
+            "libelle": "Photo du chef d'oeuvre : ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "p_ref_piecejointe_photo",
+                "id": "p_ref_piecejointe_photo",
+                "placeholder": "",
+                "type": "file",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "contraintes": {
+                "size": 10000
+            }
+        },
+        {
+            "name": "p_date_creation",
+            "type": "datetime",
+            "libelle": "Date de création ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "formats": {
+                "bdd": "Y-m-d H:i:s",
+                "affichage": "d/m/Y H:i:s"
+            }
+        },
+        {
+            "name": "p_date_modification",
+            "type": "datetime",
+            "libelle": "Date de modification ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "formats": {
+                "bdd": "Y-m-d H:i:s",
+                "affichage": "d/m/Y H:i:s"
+            }
+        },
+        {
+            "name": "p_date_suppression",
+            "type": "datetime",
+            "libelle": "Date de suppression ",
+            "nomObjet": "",
+            "unicite": false,
+            "visibilite": true,
+            "formats": {
+                "bdd": "Y-m-d H:i:s",
+                "affichage": "d/m/Y H:i:s"
+            }
+        },
+        {
+            "name": "p_ref_utilisateur_createur",
+            "type": "integer",
+            "libelle": "Référence à l'utilisateur qui a créé la pizza ",
+            "nomObjet": "utilisateur",
+            "unicite": false,
+            "visibilite": true
+        }
+    ],
+    "actions": [
+        {
+            "action": "create",
+            "url": "creer_pizza"
+        },
+        {
+            "action": "read",
+            "url": "detail_pizza"
+        },
+        {
+            "action": "update",
+            "url": "modifier_pizza"
+        },
+        {
+            "action": "delete",
+            "url": "supprimer_pizza"
+        },
+        {
+            "action": "list",
+            "url": "lister_pizza"
+        }
+    ]
+}

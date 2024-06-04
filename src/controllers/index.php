@@ -11,19 +11,15 @@ class index extends _controller {
      */
 
     // Nom du controller
-    protected $name = "Index";
+    protected $name = "index";
     // Liste des objets manipulés par le controller
     protected $objects = []; // ["objet1" => ["action"1,"action2"...],"objet2" => ["action"1,"action2"...]]
     // Paramètres du controller attendus en entrée
     protected $paramEntree = []; // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
-    // Paramètres du controller
-    protected $parametres = [];
     // Type de retour
-    protected $typeRetour = "template"; // json, fragment ou template (défaut)
+    protected $typeRetour = "pages"; // json, fragments ou pages (défaut)
     // Nom du template
-    protected $template = "";
-    // Retour du controller
-    protected $retour = "";
+    protected $template = "index";
     // Paramètres en sortie du controller
     protected $paramSortie = []; // ["nom_param1"=>["required"=>true],"nom_param2"=>["required"=>false]]
     // Besoin d'être connecté
@@ -35,7 +31,7 @@ class index extends _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function verifParams(){
-        //Fonction à surchargée dans la classe fille
+        
         return true;
     }
 
@@ -45,14 +41,6 @@ class index extends _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function execute(){
-        //Fonction à surchargée dans la classe fille
-        $objUser = new utilisateur();
-
-        var_dump($objUser);
-        
-        // Code à executer après les traitements du controller si on est en template ou fragment
-        $objTemplate = new _template("index");
-        $objTemplate->getHtmlContent("pages");
 
         return true;
     }

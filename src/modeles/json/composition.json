@@ -1,0 +1,33 @@
+{
+    "type": "modele",
+    "table": "composition",
+    "champ_id": "c_id",
+    "links": [
+        {
+            "table": "ingredient",
+            "cle": "c_ref_ingredient"
+        },
+        {
+            "table": "pizza",
+            "cle": "c_ref_pizza"
+        }
+    ],
+    "fields": [
+        {
+            "name": "c_ref_ingredient",
+            "type": "integer",
+            "libelle": "Référence à l'ingrédient ",
+            "nomObjet": "ingredient",
+            "unicite": false,
+            "visibilite": true
+        },
+        {
+            "name": "c_ref_pizza",
+            "type": "integer",
+            "libelle": "Référence à la pizza ",
+            "nomObjet": "pizza",
+            "unicite": false,
+            "visibilite": true
+        }
+    ]
+}

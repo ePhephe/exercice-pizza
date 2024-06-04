@@ -23,7 +23,7 @@ class _controller {
     // Nom du template
     protected $template = "";
     // Retour du controller
-    protected $retour = "";
+    protected $retour = [];
     // Paramètres en sortie du controller
     protected $paramSortie = []; // ["nom_param1"=>["required"=>true],"nom_param2"=>["required"=>false]]
     // Besoin d'être connecté
@@ -115,6 +115,24 @@ class _controller {
         */
 
         return true;
+    }
+
+    /**
+     * Affichage du rendu du controller
+     *
+     * @return void
+     */
+    function render(){
+        // On regarde si on est dans un cas de retour json ou non
+        if($this->get("typeRetour") != "json") {
+            // Si on ne souhaite pas de json, on va chercher le template
+            $objTemplate = new _template($this->get("template"),array_merge($this->get("paramSortie"),$this->get("retour")));
+            $objTemplate->getHtmlContent($this->get("typeRetour"));
+        }
+        else {
+            // Sinon on affiche le json
+            echo json_encode(array_merge($this->get("paramSortie"),$this->get("retour")));
+        }
     }
 
     /**

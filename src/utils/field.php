@@ -14,7 +14,8 @@
  * @property $contraintes Contraintes du champ
  * @property $formats Formats du champ
  * @property $listCleValeur Liste clés <=> valeur
- * @property $unicite Valeur de champ unique
+ * @property $unicite Indique si la valeur du champ doit être unique
+ * @property $visibility Valeur de champ unique
  * 
  * Méthodes disponibles
  * @method is() Retourne l'information si l'objet est chargé
@@ -65,8 +66,10 @@ class _field {
     protected $formats = []; // ["affichage" => "", "bdd" => "", "hmtl" => ""]
     // Liste clés <=> valeur
     protected $listCleValeur = []; // ["cle1" => "valeur1","cle2" => "valeur2"]
-    // Valeur de champ unique
+    // Indique si la valeur du champ doit être unique
     protected $unicite = false;
+    // Indique si le champ doit être visible ou non (retourner par un getter ou non)
+    protected $visibility = true;
 
     /**
      * Méthodes
@@ -89,6 +92,8 @@ class _field {
         if(isSet($champ->nomObjet)) $this->nomObjet = $champ->nomObjet;
         // On récupère la notion d'unicité du champ
         $this->unicite = $champ->unicite;
+        // On récupère la notion de visibilité du champ
+        $this->visibility = $champ->visibilite;
         // On récupère les contraintes sur le champ s'il y en a
         if(isSet($champ->contraintes)) $this->contraintes = (array) $champ->contraintes;
         // On récupère les format du champ s'il y en a
@@ -253,20 +258,23 @@ class _field {
      * Retourne la valeur pour l'attribut passé en paramètre
      *
      * @param  string $fieldName - Nom de l'attribut
-     * @return mixed Valeur de l'attribut
+     * @return mixed Valeur de l'attribut ou false
      */
     function get($name){
         // On vérifie si une méthode get_fieldname existe dans la classe fille, dans ce cas on l'appelle
         if(method_exists($this,"get_$name"))
             return call_user_func([$this,"get_$name"]);
 
-        return $this->$name;
+        if($name === "value" && $this->visibility === true)
+            return $this->value;
+        else
+            return false;
     }
 
     /**
      * Retourne la valeur brute du champ
      *
-     * @return mixed Valeur du champ brut
+     * @return mixed Valeur du champ brut ou false
      */
     function getValue(){
         // Si le champ n'a pas de valeur
@@ -284,25 +292,30 @@ class _field {
                     return "";
             }
         }
-
-        return $this->value;
+        
+        if($this->visibility === true)
+            return $this->value;
+        else
+            return false;
     }
 
     /**
      * Retourne l'objet lié au champ
      *
-     * @return object Objet lié au champ
+     * @return mixed Objet lié au champ ou false
      */
     function getObjet(){
         // On vérifie que l'objet n'est pas vide
         if(!empty($this->get("objet"))){
             // On retourne l'objet
-            return $this->objet;
+            if($this->visibility === true)
+                return $this->objet;
         }
         else { 
             // On retourne un nouvel objet (non chargé)
             $objectName = $this->nomObjet;
-            return new $objectName();
+            if($this->visibility === true)
+                return new $objectName();
         }
     }
 
@@ -310,7 +323,7 @@ class _field {
      * Retourne la valeur du champ mise en forme au format demandé
      *
      * @param string $format Format que l'on souhaite affiché
-     * @return mixed Valeur du champ formaté
+     * @return mixed Valeur du champ formaté ou false
      */
     function getFormat($format){
         // On récupère le format souhaité
@@ -319,41 +332,57 @@ class _field {
         // On réalise le traitement nécessaire
         $value = $this->value;
 
-        return $value;
+        if($this->visibility === true)
+            return $value;
+        else
+            return false;
     }
 
     /**
      * Retourne la valeur affichable pour l'attribut passé en paramètre dans le cas d'une liste clé valeur
      *
-     * @return string Libellé affichable de l'attribut
+     * @return mixed Libellé affichable de l'attribut  ou false
      */
     function getListLibelle() {
         // On vérifie qu'en liste est bien renseigné pour ce champ
-        if(!empty($this->listCleValeur))
+        if(!empty($this->listCleValeur)) {
             //Dans ce cas on retourne le libelle correspondant à la valeur du champ dans le tableau
-            return $this->listCleValeur[$this->value];
-        else
+            if($this->visibility === true)
+                return $this->listCleValeur[$this->value];
+            else
+                return false;
+        }
+        else {
             //Sinon on retourne la valeur brute
-            return $this->value;
+            if($this->visibility === true)
+                return $this->value;
+            else
+                return false;
+        }
     }
     
     /**
      * Retourne le champ sous forme de tableau des différents formats
      *
-     * @return array Tablea des valeurs du champ sous toutes ses formes
+     * @return mixed Tablea des valeurs du champ sous toutes ses formes ou false
      */
     function getToArray() {
         // On initialise le tableau de retour
         $arrayResultat = [];
 
-        // On met place les valeurs en fonction de ce qui est disponible
-        $arrayResultat["value"] = $this->getValue();
-        $arrayResultat["object"] = $this->getObjet()->getToArray();
-        $arrayResultat["html"] = $this->getFormat("html");
-        $arrayResultat["affichage"] = $this->getFormat("affichage");
-        $arrayResultat["list_libelle"] = $this->getListLibelle();
-
-        return $arrayResultat;
+        if($this->visibility === true) {
+            // On met place les valeurs en fonction de ce qui est disponible
+            $arrayResultat["value"] = $this->getValue();
+            $arrayResultat["object"] = $this->getObjet()->getToArray();
+            $arrayResultat["html"] = $this->getFormat("html");
+            $arrayResultat["affichage"] = $this->getFormat("affichage");
+            $arrayResultat["list_libelle"] = $this->getListLibelle();
+        
+            return $arrayResultat;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -361,10 +390,13 @@ class _field {
      * Permet de retourner la valeur d'un attribut
      *
      * @param  string $name Attribut concerné
-     * @return mixed Valeur de l'attribut $name
+     * @return mixed Valeur de l'attribut $name ou false
      */
     function __get($name){
-        return $this->$name;
+        if($this->visibility === true)
+            return $this->$name;
+        else
+            return false;
     }
     
     /**
