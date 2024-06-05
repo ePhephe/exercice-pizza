@@ -19,7 +19,15 @@
             "libelle": "Référence à l'ingrédient ",
             "nomObjet": "ingredient",
             "unicite": false,
-            "visibilite": true
+            "visibilite": true,
+            "input": {
+                "name": "c_ref_ingredient",
+                "id": "c_ref_ingredient",
+                "placeholder": "Ingrédient choisie",
+                "type": "text",
+                "step": "",
+                "confirmationNeeded": false
+            },
         },
         {
             "name": "c_ref_pizza",
@@ -28,6 +36,64 @@
             "nomObjet": "pizza",
             "unicite": false,
             "visibilite": true
+        },
+        {
+            "name": "c_prix_ingredient",
+            "type": "float",
+            "libelle": "Prix de l'ingrédient dans cette pizza ",
+            "nomObjet": "pizza",
+            "unicite": false,
+            "visibilite": true,
+            "contraintes": {
+                "min": 0.01,
+                "max": 999.99
+            }
+        },
+        {
+            "name": "c_dosage_ingredient",
+            "type": "float",
+            "libelle": "Dosage de l'ingrédient dans cette pizza ",
+            "nomObjet": "pizza",
+            "unicite": false,
+            "visibilite": true,
+            "input": {
+                "name": "c_dosage_ingredient",
+                "id": "c_dosage_ingredient",
+                "placeholder": "Choisissez la quantité d'ingrédient souhaité ",
+                "type": "radiobox",
+                "step": "",
+                "confirmationNeeded": false
+            },
+            "listeCleValeur": [
+                {
+                    "cle": "0.7",
+                    "valeur": "---"
+                },
+                {
+                    "cle": "0.8",
+                    "valeur": "--"
+                },
+                {
+                    "cle": "0.9",
+                    "valeur": "-"
+                },
+                {
+                    "cle": "1",
+                    "valeur": "="
+                },
+                {
+                    "cle": "1.1",
+                    "valeur": "+"
+                },
+                {
+                    "cle": "1.2",
+                    "valeur": "++"
+                },
+                {
+                    "cle": "1.3",
+                    "valeur": "+++"
+                }
+            ]
         }
     ]
 }

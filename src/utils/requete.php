@@ -48,29 +48,29 @@ class _requete {
      */
 
     // Champs de la requêtes
-    protected array $fields = []; // ["nom_champ1" => "objet_champ1","nom_champ2" => "objet_champ2"]
+    protected $fields = []; // ["nom_champ1" => "objet_champ1","nom_champ2" => "objet_champ2"]
     // Nom de la table principale (de laquelle part la requête)
-    protected string $mainTable = "";
+    protected $mainTable = "";
     // Tables de la requête
-    protected array $tables = []; // ["nom_table1" => "objet_table1","nom_table1" => "objet_table1"] /!\ Pour l'instant on ne gère qu'une table pour les INSERT/UPDATE/DELETE
+    protected $tables = []; // ["nom_table1" => "objet_table1","nom_table1" => "objet_table1"] /!\ Pour l'instant on ne gère qu'une table pour les INSERT/UPDATE/DELETE
     // Texte de la requête
-    protected string $requete = "";
+    protected $requete = "";
     // Filtres pour la clause WHERE
-    protected array $filtres = []; // [["champ"=>"nom_champ","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"],["champ" => "bloc", "valeur" => [["champ"=>"nom","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"],["champ"=>"nom","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"]], "operateur" => "OR"]
+    protected $filtres = []; // [["champ"=>"nom_champ","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"],["champ" => "bloc", "valeur" => [["champ"=>"nom","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"],["champ"=>"nom","valeur"=>"test","operateur"=>"LIKE","table"=>"nom_table_champ"]], "operateur" => "OR"]
     // Ordres de tri
-    protected array $order = []; // [["champ" => "sens"],["champ" => "sens"]]
+    protected $order = []; // [["champ" => "sens"],["champ" => "sens"]]
     // Limit du nombre de résultat à appliquer
-    protected array $limit = []; // ["limit" => 10,"offset" => 0]
+    protected $limit = []; // ["limit" => 10,"offset" => 0]
     // Tableau des paramètres pour l'execution
-    protected array $params = []; // [":nom_champ1" => "valeur_champ1",":nom_champ2" => "valeur_champ2"]
+    protected $params = []; // [":nom_champ1" => "valeur_champ1",":nom_champ2" => "valeur_champ2"]
     // Est-ce que l'on veut que le partitionnement des données s'applique
-    protected bool $partionnement = true;
+    protected $partionnement = true;
 
     // Objet PDO de la requête
-    protected object $objet;
+    protected $objet;
 
     //Base de données ouverte
-    protected static object $bdd;
+    protected static $bdd;
 
     /**
      * Méthodes

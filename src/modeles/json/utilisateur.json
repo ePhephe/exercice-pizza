@@ -102,7 +102,8 @@
                 "placeholder": "",
                 "type": "file",
                 "step": "",
-                "confirmationNeeded": false
+                "confirmationNeeded": false,
+                "accept": "image/*"
             },
             "contraintes": {
                 "size": 10000
