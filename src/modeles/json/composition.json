@@ -27,7 +27,7 @@
                 "type": "text",
                 "step": "",
                 "confirmationNeeded": false
-            },
+            }
         },
         {
             "name": "c_ref_pizza",

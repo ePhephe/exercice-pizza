@@ -157,6 +157,7 @@ class _model {
         if(method_exists($this,"get_$fieldName"))
             return call_user_func([$this,"get_$fieldName"]);
 
+        var_dump($this->fields);
         return $this->fields[$fieldName];
     }
 
@@ -285,10 +286,12 @@ class _model {
             [$this->table => $this],
             $this->partitionement,
             [
-                "champ" => $this->champ_id,
-                "valeur" => $id,
-                "operateur" => "=",
-                "table" => $this->table
+                [
+                    "champ" => $this->champ_id,
+                    "valeur" => $id,
+                    "operateur" => "=",
+                    "table" => $this->table
+                ]
             ]
         );
 

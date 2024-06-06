@@ -3,7 +3,7 @@
 /**
  * 
  * Attributs disponibles
- * @property
+ * @property $table Nom de la table
  * 
  * Méthodes disponibles
  * @method 
@@ -20,6 +20,8 @@ class composition extends _model {
      * Attributs
      */
 
+    // Nom de la table dans la BDD
+    protected $table = "composition";
 
     /**
      * Méthodes

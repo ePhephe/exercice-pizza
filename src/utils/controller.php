@@ -94,7 +94,23 @@ class _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function verifParams(){
-        //Fonction à surchargée dans la classe fille
+        // A surcharger ou compléter dans la classe fille //
+        
+        // On parcourt tous les paramètres attendus en entrée
+        foreach ($this->paramEntree as $param => $infosParam) {
+            // On vérifie déjà s'ils ne sont pas déjà dans les paramètres
+            if(!isSet($this->parametres[$param])) {
+                // On récupère les informations de la method correspondante
+                $superglobal = $GLOBALS[$infosParam["method"]];
+                // Si le paramètre est required TRUE, on test si il est bien présent
+                if($infosParam["required"] === true && !isSet($superglobal[$param])) {
+                    return false;
+                }
+
+                $this->parametres[$param] = $superglobal[$param];
+            }
+        }
+
         return true;
     }
 
@@ -104,17 +120,12 @@ class _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function execute(){
-        //Fonction à surchargée dans la classe fille
-        /*
-        // Code à executer après les traitements du controller si on est en template ou fragment
-        $objTemplate = new _template();
-        $objTemplate->getHtmlContent("template");
+        //Fonction à surchargée ou complétée dans la classe fille
 
-        // Code à executer après les traitements du controller si on est en json
-        echo json_encode($this->retour);
-        */
-
-        return true;
+        // On teste si la validation des paramètres se passe bien sinon on retourne false
+        if(!$this->verifParams()) {
+            return false;
+        }
     }
 
     /**

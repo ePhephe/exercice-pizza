@@ -3,6 +3,7 @@
 /**
  * 
  * Attributs disponibles
+ * @property $table Nom de la table
  * @property $fieldLogin Champ du login clé de connexion d'un utilisateur
  * @property $fieldPassword Champ du password clé de connexion d'un utilisateur
  * @property $fieldSelectorToken Champ clé de sélection du token (réini de mot de passe)
@@ -32,6 +33,8 @@ class utilisateur extends _model {
      * Attributs
      */
 
+    // Nom de la table dans la BDD
+    protected $table = "utilisateur";
     // Nom des champs clés de connexion d'un utilisateur
     protected $fieldLogin = "u_email";
     protected $fieldPassword = "u_password";
@@ -219,6 +222,7 @@ class utilisateur extends _model {
         //On récupère la ligne de résultat dans une variable
         $arrayInfos = $arrayResultats[0];
         $this->load($arrayInfos[$this->champ_id]);
+        
 
         //On génère les éléments pour le token
         $strSelector = bin2hex(random_bytes(8));

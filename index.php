@@ -36,7 +36,7 @@ else {
  */
 
 // On instancie un objet controller pour la page concerné
-$objController = new $page();
+$objController = new $page($_REQUEST);
 // On lance l'execution du controller
 $objController->execute();
 

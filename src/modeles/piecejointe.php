@@ -3,10 +3,15 @@
 /**
  * 
  * Attributs disponibles
+ * @property $table Nom de la table
  * @property $racine Répertoire racine où sont stockés les fichiers
  * 
  * Méthodes disponibles
- * @method 
+ * @method get_url() Retourne l'URL complète du fichier
+ * @method addFile() Réalise l'ajout dans fichier sur le serveur et dans la BDD
+ * @method verifUpload() Vérifie que le fichier est correctement uploader
+ * @method uploadFile() Upload le fichier au bon endroit sur le serveur
+ * @method insertFile() Ajoute le fichier dans la base de données
  * 
  */
 
@@ -14,12 +19,14 @@
  * Classe _piecejointe : classe générique des pieces jointes
  */
 
-class _piecejointe extends _model {
+class piecejointe extends _model {
 
     /**
      * Attributs
      */
 
+    // Nom de la table dans la BDD
+    protected $table = "piecejointe";
     // Répertoire racine où sont stockés les fichiers
     protected $racine = "public/uploads/";
 

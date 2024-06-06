@@ -171,7 +171,7 @@ class _requete {
       */
     static function bdd() {
         if(empty(static::$bdd)) {
-            static::$bdd = new PDO("mysql:host=localhost;dbname=projets_tickets_mdurand;charset=UTF8","mdurand","ac2dmTM8q?M");;
+            static::$bdd = new PDO("mysql:host=localhost;dbname=projets_pizza_mdurand;charset=UTF8","mdurand","ac2dmTM8q?M");;
             static::$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             return static::$bdd;
         }
@@ -419,7 +419,6 @@ class _requete {
         if(empty($filtres)) {
             $filtres = $this->get("filtres");
         }
-
         // On parcourt la liste des filtres de l'objet
         foreach ($filtres as $indexFiltre => $unFiltre) {
             // On gère si le filtre est un nouveau bloc de condition
@@ -447,8 +446,11 @@ class _requete {
     function makeUnFiltre($unFiltre,$index) {
         // On initialise le filtre
         $strFiltre = "";
+
+        var_dump($unFiltre);
         // On récupère les objets table et field correspondant à notre champ
         $table = $this->get("tables")[$unFiltre["table"]];
+        var_dump($table->get("fields"));
         $field = $table->get("fields")["champ"];
 
         if($field === $table->champ_id()){

@@ -3,10 +3,11 @@
 /**
  * 
  * Attributs disponibles
- * @property
+ * @property $table Nom de la table
+ * @property $listIngredients Liste des ingrédients
  * 
  * Méthodes disponibles
- * @method 
+ * @method __construct() Constructeur de l'objet
  * 
  */
 
@@ -19,6 +20,8 @@ class pizza extends _model {
     /**
      * Attributs
      */
+    // Nom de la table dans la BDD
+    protected $table = "pizza";
     // Liste des ingrédients qui composent la pizza
     protected $listIngredients = [];
 
