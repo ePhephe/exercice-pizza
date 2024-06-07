@@ -22,6 +22,16 @@ class _controller {
     protected $typeRetour = "template"; // json, fragment ou template (défaut)
     // Nom du template
     protected $template = "";
+    // Tableau de paramètre du template
+    protected $paramTemplate = [ // ["head" => ["title" => "", "metadescription" => "", "lang" => ""], "is_nav" => true, "is_footer" => true]
+        "head" => [
+            "title" => "", 
+            "metadescription" => "", 
+            "lang" => ""
+        ], 
+        "is_nav" => true, 
+        "is_footer" => true
+    ]; 
     // Retour du controller
     protected $retour = [];
     // Paramètres en sortie du controller
@@ -102,12 +112,31 @@ class _controller {
             if(!isSet($this->parametres[$param])) {
                 // On récupère les informations de la method correspondante
                 $superglobal = $GLOBALS[$infosParam["method"]];
+                var_dump($superglobal);
+                var_dump($param);
+                var_dump($this->parametres);
+                // Si on est dans le cas d'un paramètre qui serait un formulaire entier et qu'il est required TRUE
+                if($param === "form" && $infosParam["required"] === true) {
+                    // On vérifie que la méthode par laquelle passe le formulaire n'est pas vide
+                    if(empty($superglobal)) {
+                        return false;
+                    }
+                    else {
+                        $this->parametres[$param] = $superglobal;
+                    }
+                }
+                else if($param === "form"){
+                    $this->parametres[$param] = $superglobal;
+                }
+
                 // Si le paramètre est required TRUE, on test si il est bien présent
                 if($infosParam["required"] === true && !isSet($superglobal[$param])) {
                     return false;
                 }
-
-                $this->parametres[$param] = $superglobal[$param];
+                // Si le paramètre est présent dans la variable globale, on la récupère
+                else if(isSet($superglobal[$param])){
+                    $this->parametres[$param] = $superglobal[$param];
+                }
             }
         }
 
@@ -138,7 +167,7 @@ class _controller {
         if($this->get("typeRetour") != "json") {
             // Si on ne souhaite pas de json, on va chercher le template
             $objTemplate = new _template($this->get("template"),array_merge($this->get("paramSortie"),$this->get("retour")));
-            $objTemplate->getHtmlContent($this->get("typeRetour"));
+            $objTemplate->getHtmlContent($this->get("typeRetour"),$this->paramTemplate["head"], $this->paramTemplate["is_nav"], $this->paramTemplate["is_footer"]);
         }
         else {
             // Sinon on affiche le json
@@ -201,8 +230,8 @@ class _controller {
                     $objet = new $nomObjet ();
                     // On récupère le partitionnement pour cette permission
                     $partitionnement = $this->permission->getPartitionnement($nomObjet,$nomAction);
-                    if (isset($this->params[$objet->champ_id()]) && $partitionnement===true) {
-                        $objet->load($this->params[$objet->champ_id()]);
+                    if (isset($this->parametres[$objet->champ_id()]) && $partitionnement===true) {
+                        $objet->load($this->parametres[$objet->champ_id()]);
                         if(!$objet->verifPartitionnement()){
                             $this->makeRetour(false,"non-autorised","Vous n'êtes pas autorisé !");
                             return false;

@@ -13,6 +13,7 @@
  * Méthodes disponibles
  * @method is() Retourne l'information si l'objet est chargé
  * @method get() Retourne l'objet du champ passé en paramètre
+ * @method getFields() Retourne le tableau des objets fields
  * @method getToArray() Retourne la valeur pour tous les champs, sous forme d'un tableau
  * @method id() Retourne l'identifiant de l'objet courant
  * @method champ_id() Retourne le champ identifiant de l'objet courant
@@ -113,7 +114,7 @@ class _model {
         }
         // On parcourt les actions pour en construire le tableau
         foreach ($infosModele->actions as $value) {
-            $this->actions[] = [$value->action => $value->url];
+            $this->actions[$value->action] = $value->url;
         }
         
         // On parcourt tous les champs présent dans le fichier
@@ -157,8 +158,19 @@ class _model {
         if(method_exists($this,"get_$fieldName"))
             return call_user_func([$this,"get_$fieldName"]);
 
-        var_dump($this->fields);
-        return $this->fields[$fieldName];
+        if(isSet($this->fields[$fieldName]))
+            return $this->fields[$fieldName];
+        else
+            return new _field();
+    }
+
+    /**
+     * Retourne le tableau des objets fields
+     *
+     * @return array Tableau des objets fields
+     */
+    function getFields() {
+        return $this->fields;
     }
 
     /**
@@ -354,10 +366,12 @@ class _model {
             [$this->table => $this],
             $this->partitionement,
             [
-                "champ" => $this->champ_id,
-                "valeur" => $this->id,
-                "operateur" => "=",
-                "table" => $this->table
+                [
+                    "champ" => $this->champ_id,
+                    "valeur" => $this->id,
+                    "operateur" => "=",
+                    "table" => $this->table
+                ]
             ]
         );
            
@@ -531,7 +545,8 @@ class _model {
 
         //On parcourt tous les champs et on demande le code HTML de chacun
         foreach ($this->fields as $keyField => $field) {
-            $templateHTML .= $field->getElementFormulaire($listInput[$keyField], $acces);
+            $input = (isSet($listInput[$keyField])) ? $listInput[$keyField] : [];
+            $templateHTML .= $field->getElementFormulaire($input, $acces);
         }
 
         $templateHTML .= '<div class="buttonForm">';

@@ -12,7 +12,7 @@
         {
             "name": "u_nom",
             "type": "text",
-            "libelle": "Nom : ",
+            "libelle": "Nom",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
@@ -32,7 +32,7 @@
         {
             "name": "u_prenom",
             "type": "text",
-            "libelle": "Prénom : ",
+            "libelle": "Prénom",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
@@ -52,13 +52,13 @@
         {
             "name": "u_email",
             "type": "text",
-            "libelle": "Adresse e-mail : ",
+            "libelle": "Adresse e-mail",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
             "input": {
-                "name": "u_nom",
-                "id": "u_nom",
+                "name": "u_email",
+                "id": "u_email",
                 "placeholder": "E-mail qui servira d'identifiant",
                 "type": "email",
                 "step": "",
@@ -72,15 +72,15 @@
         {
             "name": "u_password",
             "type": "password",
-            "libelle": "Mot de passe : ",
+            "libelle": "Mot de passe",
             "nomObjet": "",
             "unicite": false,
             "visibilite": false,
             "input": {
-                "name": "u_nom",
-                "id": "u_nom",
+                "name": "u_password",
+                "id": "u_password",
                 "placeholder": "Mot de passe de 8 à 16 caractères",
-                "type": "text",
+                "type": "password",
                 "step": "",
                 "confirmationNeeded": true
             },
@@ -90,9 +90,9 @@
             }
         },
         {
-            "name": "u_ref_piecejopinte_photo",
+            "name": "u_ref_piecejointe_photo",
             "type": "integer",
-            "libelle": "Photo de profil : ",
+            "libelle": "Photo de profil",
             "nomObjet": "piecejointe",
             "unicite": false,
             "visibilite": true,

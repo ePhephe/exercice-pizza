@@ -39,8 +39,8 @@ class utilisateur extends _model {
     protected $fieldLogin = "u_email";
     protected $fieldPassword = "u_password";
     protected $fieldSelectorToken = "u_selector_reini_password";
-    protected $fieldToken = "u_password";
-    protected $fieldExpirationToken = "u_email";
+    protected $fieldToken = "u_token_reini";
+    protected $fieldExpirationToken = "u_expiration_reini_password";
 
     // URLs de gestion de la connexion
     protected $arrayURL = [
@@ -52,6 +52,11 @@ class utilisateur extends _model {
         "newPassword" => "new_password.php",
         "accueil" => "afficher_accueil.php"
     ];
+
+    // Nom des controllers d'action sur l'objet
+    protected $actions = [
+        "" => ""
+    ]; // ["action" => "nom_controller"]
 
     /**
      * Méthodes
@@ -232,7 +237,7 @@ class utilisateur extends _model {
         $dateExpiration->add(new DateInterval('PT01H'));
 
         //On génère l'URL à envoyer par mail
-        $urlToEmail = 'http://tickets.mdurand.mywebecom.ovh/'.$this->arrayURL["formNewPassword"].'?'.http_build_query([
+        $urlToEmail = 'http://pizza.mdurand.mywebecom.ovh/'.$this->arrayURL["formNewPassword"].'?'.http_build_query([
             'selector' => $strSelector,
             'validator' => bin2hex($strToken)
         ]);

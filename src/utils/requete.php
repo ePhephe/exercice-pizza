@@ -64,7 +64,7 @@ class _requete {
     // Tableau des paramètres pour l'execution
     protected $params = []; // [":nom_champ1" => "valeur_champ1",":nom_champ2" => "valeur_champ2"]
     // Est-ce que l'on veut que le partitionnement des données s'applique
-    protected $partionnement = true;
+    protected $partitionnement = true;
 
     // Objet PDO de la requête
     protected $objet;
@@ -194,8 +194,8 @@ class _requete {
             $this->requete .= $this->makeFrom();
             // Clause WHERE
             $this->requete .= " WHERE " . $this->makeFiltres();
-            // Complément à la clause WHERE si partitionement
-            if($this->get("partitionement") === true) {
+            // Complément à la clause WHERE si partitionnement
+            if($this->get("partitionnement") === true) {
                 $this->requete .= $this->makeFiltrePartitionnement();
             }
             // Clause ORDER
@@ -248,13 +248,13 @@ class _requete {
             // Clause UPDATE
             $this->requete .= "UPDATE ";
             // Clause FROM
-            $this->requete .= $this->makeFrom();
+            $this->requete .= $this->get("mainTable") . " ";
             // Clause SET
             $this->requete .= $this->makeSet();
             // Clause WHERE
             $this->requete .= " WHERE " . $this->makeFiltres();
-            // Complément à la clause WHERE si partitionement
-            if($this->get("partitionement") === true) {
+            // Complément à la clause WHERE si partitionnement
+            if($this->get("partitionnement") === true) {
                 $this->requete .= $this->makeFiltrePartitionnement();
             }
         }
@@ -281,8 +281,8 @@ class _requete {
             $this->requete .= $this->makeFrom();
             // Clause WHERE
             $this->requete .= " WHERE " . $this->makeFiltres();
-            // Complément à la clause WHERE si partitionement
-            if($this->get("partitionement") === true) {
+            // Complément à la clause WHERE si partitionnement
+            if($this->get("partitionnement") === true) {
                 $this->requete .= $this->makeFiltrePartitionnement();
             }
         }
@@ -307,8 +307,8 @@ class _requete {
 
         //On exécute la requête avec ses paramètres et on gère les erreurs
         if ( ! $this->objet->execute($this->get("params"))) { 
-            //var_dump($strRequete);
-            //var_dump($arrayParam);
+            var_dump($this->requete);
+            var_dump($this->get("params"));
             return false;
         }
   
@@ -419,6 +419,7 @@ class _requete {
         if(empty($filtres)) {
             $filtres = $this->get("filtres");
         }
+
         // On parcourt la liste des filtres de l'objet
         foreach ($filtres as $indexFiltre => $unFiltre) {
             // On gère si le filtre est un nouveau bloc de condition
@@ -447,23 +448,24 @@ class _requete {
         // On initialise le filtre
         $strFiltre = "";
 
-        var_dump($unFiltre);
         // On récupère les objets table et field correspondant à notre champ
         $table = $this->get("tables")[$unFiltre["table"]];
-        var_dump($table->get("fields"));
-        $field = $table->get("fields")["champ"];
+        $fields = $table->getFields();
 
-        if($field === $table->champ_id()){
+        if($unFiltre["champ"] === $table->champ_id()){
+            $type = "integer";
             $strFiltre .= "`" . $unFiltre["champ"] . "` " . $unFiltre["operateur"] . " :".$unFiltre["champ"].$index;
         }
-        else if($field->get("type") === "text") {
+        else if($fields[$unFiltre["champ"]]->get("type") === "text") {
+            $type = $fields[$unFiltre["champ"]]->get("type");
             $strFiltre .= "UPPER(".$unFiltre["champ"].") " . $unFiltre["operateur"] . " :".$unFiltre["champ"].$index;
         }
         else {
+            $type = $fields[$unFiltre["champ"]]->get("type");
             $strFiltre .= "`" . $unFiltre["champ"] . "` " . $unFiltre["operateur"] . " :".$unFiltre["champ"].$index;
         }
 
-        $this->makeUnFiltreValeur($unFiltre,$index,$field);
+        $this->makeUnFiltreValeur($unFiltre,$index,$type);
 
         return $strFiltre;
     }
@@ -472,15 +474,15 @@ class _requete {
      * Met en forme la valeur pour le filtre
      *
      * @param  array $unFiltre Tableau du filtre concerné
-     * @param  object $field Objet correspondant au champ du filtre
+     * @param  string $type Type du filtre
      * @return boolean - True si tout s'est bien passé sinon False
      */
-    function makeUnFiltreValeur($unFiltre,$index,$field) {
+    function makeUnFiltreValeur($unFiltre,$index,$type) {
         // On initialise une valeur à vide
         $valeur = "";
 
         // Selon le type, on va agir différement
-        if($field->get("type") === "text") {
+        if($type === "text") {
             //Dans le cas d'un type text
             if($unFiltre["operateur"] === "LIKE"){
                 // Si l'opérateur est LIKE, on ajoute le caractère joker et on passe en majuscule
@@ -535,15 +537,12 @@ class _requete {
         $strCle = ":" . $field->get("name");          
         // Si le champ à une valeur, on la stocke dans le tableau des paramètres
         if ($field->get("value") != "") {
-            $arrayResult[$strCle] = $field->get("value");
+            $this->params[$strCle] = $field->get("value");
         } 
         // Sinon la valeur du paramètre est définie à null
         else {
-            $arrayResult[$strCle] = null;
+            $this->params[$strCle] = null;
         }
-
-        // On stocke les paramètres dans le tableau correspondant de l'objet de la requête
-        $this->params[] = $arrayResult;
     }
 
     /**
@@ -553,8 +552,8 @@ class _requete {
      */
     function makeFiltrePartitionnement() {
         //On initialise le champ de retour et le filtre
-        $strClausePartitionement = "";
-        $arrayFiltrePartitionement = [];
+        $strClausePartitionnement = "";
+        $arrayFiltrePartitionnement = [];
 
         //On parcourt tous les champs
         foreach ($this->fields as $cleChamp => $field) {
@@ -563,14 +562,14 @@ class _requete {
                 $objSession = _session::getSession();
                 //Si le lien correspond à la table des utilisateurs
                 if($field->get("nomObjet") === $objSession->getTableUser()) {
-                     $arrayFiltrePartitionement[] = " `$cleChamp` = ".$objSession->id(). " ";
+                     $arrayFiltrePartitionnement[] = " `$cleChamp` = ".$objSession->id(). " ";
                 }
             }
         }
 
-        if(!empty($arrayFiltrePartitionement))
-            $strClausePartitionement .= "( ".implode(" OR ",$arrayFiltrePartitionement). " ) ";
+        if(!empty($arrayFiltrePartitionnement))
+            $strClausePartitionnement .= "( ".implode(" OR ",$arrayFiltrePartitionnement). " ) ";
 
-        return $strClausePartitionement;
+        return $strClausePartitionnement;
     }
 }

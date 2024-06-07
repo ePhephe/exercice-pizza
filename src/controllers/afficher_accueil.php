@@ -1,27 +1,28 @@
 <?php
 
 /**
- * Classe afficher_reini_password : classe du controller afficher_reini_password
+ * Classe afficher_accueil : classe du controller afficher_accueil
  * @todo
- * Affiche le formulaire de réinitialisation du mot de passe
+ * Afficher la page d'accueil
  */
 
-class afficher_reini_password extends _controller {
+class afficher_accueil extends _controller {
 
     /**
      * Attributs
      */
 
     // Nom du controller
-    protected $name = "afficher_reini_password";
+    protected $name = "afficher_accueil";
     // Liste des objets manipulés par le controller
     protected $objects = []; // ["objet1" => ["action"1,"action2"...],"objet2" => ["action"1,"action2"...]]
     // Paramètres du controller attendus en entrée
-    protected $paramEntree = []; // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
+    protected $paramEntree = [ // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
+    ]; 
     // Type de retour
     protected $typeRetour = "pages"; // json, fragments ou pages (défaut)
     // Nom du template
-    protected $template = "form_reini_password";
+    protected $template = "accueil";
     // Tableau de paramètre du template
     protected $paramTemplate = [ // ["head" => ["title" => "", "metadescription" => "", "lang" => ""], "is_nav" => true, "is_footer" => true]
         "head" => [
@@ -29,13 +30,13 @@ class afficher_reini_password extends _controller {
             "metadescription" => "", 
             "lang" => "fr"
         ], 
-        "is_nav" => false, 
-        "is_footer" => false
+        "is_nav" => true, 
+        "is_footer" => true
     ];
     // Paramètres en sortie du controller
     protected $paramSortie = []; // ["nom_param1"=>["required"=>true],"nom_param2"=>["required"=>false]]
     // Besoin d'être connecté
-    protected $connected = false; // True par défaut
+    protected $connected = true; // True par défaut
 
     /**
      * Vérifie que les paramètres du controller sont bien présents et/ou leur cohérence
@@ -43,8 +44,7 @@ class afficher_reini_password extends _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function verifParams(){
-        
-        return true;
+        return parent::verifParams();
     }
 
     /**
@@ -53,11 +53,7 @@ class afficher_reini_password extends _controller {
      * @return boolean True si tout s'est bien passé, False si une erreur est survenu
      */
     function execute(){
-        //On récupère le formulaire de réinitialisation du mot de passe depuis un objet utilisateur
-        $nomObjet = $this->get("session")->getTableUser();
-        $objUtilisateur = new $nomObjet();
-        $this->paramSortie["htmlFormulaireReini"] = $objUtilisateur->formulaireReiniPassword();
-
+        
         return true;
     }
 

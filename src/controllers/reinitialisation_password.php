@@ -13,7 +13,7 @@ class reinitialisation_password extends _controller {
      */
 
     // Nom du controller
-    protected $name = "index";
+    protected $name = "reinitialisation_password";
     // Liste des objets manipulés par le controller
     protected $objects = []; // ["objet1" => ["action"1,"action2"...],"objet2" => ["action"1,"action2"...]]
     // Paramètres du controller attendus en entrée
@@ -22,6 +22,16 @@ class reinitialisation_password extends _controller {
     protected $typeRetour = "pages"; // json, fragments ou pages (défaut)
     // Nom du template
     protected $template = "form_reini_password";
+    // Tableau de paramètre du template
+    protected $paramTemplate = [ // ["head" => ["title" => "", "metadescription" => "", "lang" => ""], "is_nav" => true, "is_footer" => true]
+        "head" => [
+            "title" => "Accueil MyPizza", 
+            "metadescription" => "", 
+            "lang" => "fr"
+        ], 
+        "is_nav" => false, 
+        "is_footer" => false
+    ];
     // Paramètres en sortie du controller
     protected $paramSortie = []; // ["nom_param1"=>["required"=>true],"nom_param2"=>["required"=>false]]
     // Besoin d'être connecté
@@ -53,7 +63,7 @@ class reinitialisation_password extends _controller {
             //On récupère le formulaire de réinitialisation du mot de passe depuis un objet utilisateur
             $this->paramSortie["htmlFormulaireReini"] = $objUtilisateur->formulaireReiniPassword();
             
-            return true;
+            return false;
         }
 
         //On lance la demande de réinitialisation du mot de passe
@@ -66,7 +76,7 @@ class reinitialisation_password extends _controller {
             //On récupère le formulaire de réinitialisation du mot de passe depuis un objet utilisateur
             $this->paramSortie["htmlFormulaireReini"] = $objUtilisateur->formulaireReiniPassword();
 
-            return true;
+            return false;
         }
 
         header("Location: index.php?redirect=reini");

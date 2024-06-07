@@ -92,10 +92,10 @@
             $objUser = $objSession->userConnected();
         }
 
-        if(isSet(self::PERMISSIONS[$objUser->get("u_role_user")][$objet][$action]["autorised"]))
-            return self::PERMISSIONS[$objUser->get("u_role_user")][$objet][$action]["autorised"];
-        else
-            return self::PERMISSIONS["ALL"][$objet][$action]["autorised"];
+        // On regarde si on a un champ rôle sur l'utilisateur
+        $role = ($objUser->get("u_role_user")->is()) ? $objUser->get("u_role_user") : "ALL";
+
+        return self::PERMISSIONS[$role][$objet][$action]["autorised"];
     }
 
     /**
@@ -118,10 +118,10 @@
             $objUser = $objSession->userConnected();
         }
 
-        if(isSet(self::PERMISSIONS[$objUser->get("u_role_user")][$objet][$action]["partitionnement"]))
-            return self::PERMISSIONS[$objUser->get("u_role_user")][$objet][$action]["partitionnement"];
-        else
-            return self::PERMISSIONS["ALL"][$objet][$action]["partitionnement"];
+        // On regarde si on a un champ rôle sur l'utilisateur
+        $role = ($objUser->get("u_role_user")->is()) ? $objUser->get("u_role_user") : "ALL";
+
+        return self::PERMISSIONS[$role][$objet][$action]["partitionnement"];
     }
  }
 

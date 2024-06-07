@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Template : Formulaire de réinitialisation du mot de passe
+ * Template : Formulaire de définition d'un nouveau mot de passe
  * 
  * Paramètres :
- *  @param htmlFormulaireReini Code HTML du formulaire de connexion
+ *  @param htmlFormulaireNewPassword Code HTML du formulaire de connexion
  *  @param arrayResult [optionnal] Message de résultat à afficher sur le template
  */
 
@@ -16,7 +16,7 @@
 <main class="container-full flex align-center justify-center direction-column">
     <?php 
 
-        echo $parametres["htmlFormulaireReini"];
+        echo $parametres["htmlFormulaireNewPassword"];
 
         // Fragment pour l'affichage de message de retour
         include_once("src/templates/fragments/message.php");

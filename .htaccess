@@ -1,21 +1,10 @@
 RewriteEngine On
 
-# Bloquer l'accès à tout le contenu dans public/files/
-# RewriteRule ^public/uploads/(.*)$ - [F,L]
-# Bloquer l'accès à tout le contenu dans src/
-# RewriteRule ^src/(.*)$ - [F,L]
+# Redirige www.test.fr/index.php vers www.test.fr/index.php?page=index
+RewriteCond %{THE_REQUEST} /index\.php [NC]
+RewriteRule ^index\.php$ index.php?page=index [L,QSA]
 
-# Permettre l'accès au répertoire public/files/img
-# RewriteRule ^public/uploads/img(/.*)?$ - [L]
-
-# Redirige toutes les requêtes avec un nom de page vers index.php avec le paramètre page
-RewriteRule _controller_test.php _controller_test.php [L,QSA]
-
-# Redirige toutes les requêtes sans nom de page fourni vers index.php sans paramètre
-RewriteRule ^$ index.php [L,QSA]
-
-# Redirige toutes les requêtes avec un nom de page vers index.php avec le paramètre page
-RewriteRule ^([^/]+).php$ index.php?page=$1 [L,QSA]
-
-# Redirige toutes les requêtes sans nom de page fourni vers index.php sans paramètre
-RewriteRule ^(.*)$ index.php?error=notfound [L,QSA]
+# Redirige www.test.fr/xxx.php vers www.test.fr/index.php?page=xxx
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)\.php$ index.php?page=$1 [L,QSA]

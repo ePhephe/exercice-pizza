@@ -25,9 +25,8 @@ if(isSet($_GET["page"])) {
     $page = $_GET["page"];
 }
 else {
-    // On affiche une erreur et on s'arrête
     echo "Erreur dans l'application";
-    exit;
+    exit();
 }
 
 /**

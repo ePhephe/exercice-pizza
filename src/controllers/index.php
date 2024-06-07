@@ -17,11 +17,23 @@ class index extends _controller {
     // Liste des objets manipulés par le controller
     protected $objects = []; // ["objet1" => ["action"1,"action2"...],"objet2" => ["action"1,"action2"...]]
     // Paramètres du controller attendus en entrée
-    protected $paramEntree = ["redirect" => ["method" => "GET", "required" => false]]; // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
+    protected $paramEntree = [ // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
+        "redirect" => ["method" => "GET", "required" => false]
+    ]; 
     // Type de retour
     protected $typeRetour = "pages"; // json, fragments ou pages (défaut)
     // Nom du template
     protected $template = "form_connexion";
+    // Tableau de paramètre du template
+    protected $paramTemplate = [ // ["head" => ["title" => "", "metadescription" => "", "lang" => ""], "is_nav" => true, "is_footer" => true]
+        "head" => [
+            "title" => "Accueil MyPizza", 
+            "metadescription" => "", 
+            "lang" => "fr"
+        ], 
+        "is_nav" => false, 
+        "is_footer" => false
+    ];
     // Paramètres en sortie du controller
     protected $paramSortie = []; // ["nom_param1"=>["required"=>true],"nom_param2"=>["required"=>false]]
     // Besoin d'être connecté
@@ -58,8 +70,11 @@ class index extends _controller {
                 case 'password':
                     $this->paramSortie["arrayResult"]["message"] = "Votre mot de passe a été réinitialisé avec succès.";
                     break;
+                case 'echecnewpassword':
+                    $this->paramSortie["arrayResult"]["type_message"] = "erreur";
+                    $this->paramSortie["arrayResult"]["message"] = "Nous n'avons pas les informations nécessaires à la définition de votre nouveau mot de passe.";
+                    break;
                 default:
-                    $this->paramSortie["arrayResult"]["message"] = "";
                     break;
             }
         }
