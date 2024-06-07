@@ -23,7 +23,7 @@ class pizza extends _model {
     // Nom de la table dans la BDD
     protected $table = "pizza";
     // Liste des ingrédients qui composent la pizza
-    protected $listIngredients = [];
+    protected $listComposition = [];
 
     /**
      * Méthodes
@@ -41,6 +41,15 @@ class pizza extends _model {
         parent::__construct($id,$partitionement);
 
         // Puis on construit la liste des ingrédients de la pizza
+    }
+        
+    /**
+     * Retourne la liste de la composition de la pizza
+     *
+     * @return array Liste de la composition de la pizza
+     */
+    function get_composition(){
+        return $this->listComposition;
     }
     
 }

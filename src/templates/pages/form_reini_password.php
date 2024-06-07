@@ -10,10 +10,12 @@
 
 ?>
 
-<div class="background_app">
+<div class="background-image">
 
 </div>
-<main class="container-full flex align-center justify-center direction-column">
+<main class="container-full flex align-center justify-center" id="template_form_connexion">
+    <div class="formulaire large-10-12 flex align-center justify-around">
+        <img class="large-6-12" src="public/images/logo.png" alt="Logo de l'application Pizz'Artiste">
     <?php 
 
         echo $parametres["htmlFormulaireReini"];
@@ -21,4 +23,5 @@
         // Fragment pour l'affichage de message de retour
         include_once("src/templates/fragments/message.php");
     ?>
+    </div>
 </main>

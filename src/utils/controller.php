@@ -112,11 +112,11 @@ class _controller {
             if(!isSet($this->parametres[$param])) {
                 // On récupère les informations de la method correspondante
                 $superglobal = $GLOBALS[$infosParam["method"]];
-                var_dump($superglobal);
-                var_dump($param);
-                var_dump($this->parametres);
+
                 // Si on est dans le cas d'un paramètre qui serait un formulaire entier et qu'il est required TRUE
                 if($param === "form" && $infosParam["required"] === true) {
+                    $superglobal = array_merge($superglobal,$_FILES);
+                    $superglobal = array_merge($superglobal,$_FILES);
                     // On vérifie que la méthode par laquelle passe le formulaire n'est pas vide
                     if(empty($superglobal)) {
                         return false;
@@ -125,16 +125,18 @@ class _controller {
                         $this->parametres[$param] = $superglobal;
                     }
                 }
-                else if($param === "form"){
+                else if($param === "form" && !empty($superglobal)){
+                    // On récupère les informations de la method correspondante
+                    $superglobal = array_merge($superglobal,$_FILES);
+                    // Si le paramètre est un formulaire non requis et présent, on le récupère
                     $this->parametres[$param] = $superglobal;
                 }
-
-                // Si le paramètre est required TRUE, on test si il est bien présent
-                if($infosParam["required"] === true && !isSet($superglobal[$param])) {
+                else if($infosParam["required"] === true && !isSet($superglobal[$param])) {
+                    // Si le paramètre est required TRUE, on test si il est bien présent
                     return false;
                 }
-                // Si le paramètre est présent dans la variable globale, on la récupère
                 else if(isSet($superglobal[$param])){
+                    // Si le paramètre est présent dans la variable globale, on la récupère
                     $this->parametres[$param] = $superglobal[$param];
                 }
             }

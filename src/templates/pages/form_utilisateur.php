@@ -10,14 +10,17 @@
 
 ?>
 
-<div class="background_app">
+<div class="background-image">
 
 </div>
-<main class="container-full flex align-center justify-center direction-column">
+<main class="container-full flex align-center justify-center direction-column" id="page_form_utilisateur">
     <?php 
 
         echo $parametres["htmlFormulaire"];
+     
+    ?>
 
+    <?php 
         // Fragment pour l'affichage de message de retour
         include_once("src/templates/fragments/message.php");
     ?>

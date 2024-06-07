@@ -81,10 +81,12 @@ class _field {
      * @param  object $champ Informations sur le champ à charger
      * @return void
      */
-    function __construct($champ = []) {
+    function __construct($champ = [], $table = "") {
         if(!empty($champ)) {
             // On récupère le nom du champ
             $this->name = $champ->name;
+            // On récupère le nom de l'objet lié s'il y en a un
+            if(!empty($table)) $this->table = $table;
             // On récupère le type du champ
             $this->type = $champ->type;
             // On récupère le libellé du champ
@@ -156,7 +158,7 @@ class _field {
 
         // Si une contrainte d'une valeur minimale est présente
         if(array_key_exists("min",$this->get("contraintes"))) {
-            if($value > $this->get("contraintes")["min"])                
+            if($value < $this->get("contraintes")["min"])                
                 return false;
         }
 
@@ -168,15 +170,8 @@ class _field {
 
         // Si une contrainte d'une longueur minimale est présente
         if(array_key_exists("min_lenght",$this->get("contraintes"))) {
-            if($value > $this->get("contraintes")["min_lenght"])                
+            if(strlen($value) < $this->get("contraintes")["min_lenght"])                
                 return false;
-        }
-
-        // Si le champ doit être unique
-        if($this->get("unicite") === true) {
-            if(!$this->verifUnicite($value)) {
-                return false;
-            }
         }
 
         if(array_key_exists("bdd",$this->get("formats")) && $this->get("type") === "text") {
@@ -231,6 +226,9 @@ class _field {
                 if($value != $arrayPOST[$this->get("name")."Confirm"]){
                     return false;
                 }
+                else {
+                    return $this->setValue($arrayPOST[$this->get("name")]);
+                }
             }
             else if(isSet($arrayPOST[$this->get("name")."Hidden"])){
                 return $this->setValue($arrayPOST[$this->get("name")."Hidden"]);
@@ -239,6 +237,7 @@ class _field {
                 // On instancie un objet de pièce jointe
                 $objetPJ = new piecejointe();
                 $resultatUpload = $objetPJ->addFile($this);
+                // Selon le résultat, on set la valeur ou on retourn false
                 if($resultatUpload === false){
                     return false;
                 }
@@ -329,8 +328,12 @@ class _field {
         else { 
             // On retourne un nouvel objet (non chargé)
             $objectName = $this->nomObjet;
-            if($this->visibility === true)
-                return new $objectName();
+            if($this->visibility === true) {
+                if(empty($this->value))
+                    return new $objectName();
+                else
+                    return new $objectName(intval($this->value));
+            }
         }
     }
 
@@ -563,10 +566,10 @@ class _field {
                         $labelConfirm = '<label for="' . $this->get("name") . 'Confirm"> Confirmation : </label>';
                         $inputConfirm = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . 'Confirm" id="' . $this->get("input")["id"] . 'Confirm" ';
                         // On construit le template
-                        $templateHTML .= '<div>'.$labelConfirm.$inputConfirm.$inputContraintes.$acces.'></div>';
+                        $templateHTML .= '<div>'.$labelConfirm.$inputConfirm.$inputContraintes.$inputValue.$acces.'></div>';
                     }
                     
-                    $templateHTML .= '</div>';
+                    $templateHTML .= '</div></div>';
                     break;
             }
 

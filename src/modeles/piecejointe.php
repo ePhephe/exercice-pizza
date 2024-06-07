@@ -54,10 +54,11 @@ class piecejointe extends _model {
      * @return mixed Idenfitiant du fichier inséré ou false si échec
      */
     function addFile($field){
+        
         // On vérifie le fichier uploader
         if($this->verifUpload($field)) {
             // On réalise l'upload du fichier sur le serveur au bon endroit
-            if($this->uploadFile($_FILES)) {
+            if($this->uploadFile($_FILES[$field->get("name")])) {
                 // On insert le fichier dans la table de la base de données
                 return $this->insertFile();
             }
@@ -79,7 +80,7 @@ class piecejointe extends _model {
             // Si c'est vide, on retourne false
             return false;
         } 
-
+        
         // On stocke les informations dans une variable
         $arrayFile = $_FILES[$field->get("name")];
         // On récupère le code erreur correspondant
@@ -116,6 +117,7 @@ class piecejointe extends _model {
         $this->get("pj_nom_fichier")->setValue($fileName);
         $this->get("pj_type_fichier")->setValue($arrayFile["type"]);
         $this->get("pj_taille")->setValue($arrayFile["size"]);
+        var_dump( $this->get("pj_taille"));
         $this->get("pj_statut")->setValue("V");
 
         // On construit la date

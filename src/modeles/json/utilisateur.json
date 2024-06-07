@@ -97,8 +97,8 @@
             "unicite": false,
             "visibilite": true,
             "input": {
-                "name": "u_ref_piecejopinte_photo",
-                "id": "u_ref_piecejopinte_photo",
+                "name": "u_ref_piecejointe_photo",
+                "id": "u_ref_piecejointe_photo",
                 "placeholder": "",
                 "type": "file",
                 "step": "",

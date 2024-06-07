@@ -8,3 +8,196 @@
 @import "./components/_switch.scss";
 
 /********** Règles Générales ***********/
+body {
+    font-family: "Roboto";
+}
+a {
+    text-decoration: none;
+    font-family: "Pacifico";
+    color: var(--fifthColor);
+}
+header {
+    background-color: var(--firstColor);
+    height: 100px;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-shadow: 0px 2px 5px var(--fifthColor);
+    position: fixed;
+    top: 0;
+    left: 0;
+    img {
+        height: 100%;
+    }
+    div.logo {
+        height: 100px;
+    }
+    a {
+        font-size: 1.2rem;
+    }
+    .menu a {
+        font-size: 1.5rem;
+        &:hover {
+            color: var(--secondColor);
+        }
+    }
+    .compte a {
+        font-family: "Roboto";
+        font-weight: 700;
+    }
+}
+.header_height {
+    height: 100px;
+}
+.background-image {
+    background-image: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    z-index: -10;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.message-retour {
+    padding: var(--gouttiere);
+    width: 50%;
+    margin-top: var(--gouttiere);
+    margin-bottom: var(--gouttiere);
+}
+.erreur {
+    background-color: var(--errorColorLight);
+    color: var(--errorColor);
+}
+.photo_profil{
+    height: 60px;
+    width: 60px;
+    img {
+        border-radius: 50%;
+    }
+}
+
+/********** Page de connexion ***********/
+main#template_form_connexion {
+    height: 100vh;
+
+    div.formulaire {
+        height: 65vh;
+        background-color: var(--firstColor);
+        border-radius: var(--radiusMedium);
+        border: 10px solid var(--fifthColor);
+        padding: var(--gouttiere);
+        box-shadow: 0px 0px 10px black;
+
+        form {
+            width: 30%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--gouttiere);
+            div {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--gouttiere);
+            }
+            label {
+                font-family: "Pacifico";
+                width: 100%;
+                font-size: 1.5rem;
+                color: var(--secondColor);
+                text-shadow: 0px 0px 10px black;
+            }
+            input {
+                width: 100%;
+                height: 30px;
+                padding-left: 10px;
+                font-family: "Roboto";
+            }
+            input[type=submit] {
+                width: -moz-fit-content;
+                width: fit-content;
+                height: fit-content;
+                padding: 4px 32px;
+                margin-top: 20px;
+                cursor: pointer;
+                font-family: "Pacifico";
+                font-size: 1.5rem;
+                background-color: var(--thirdColor);
+                color: var(--fifthColor);
+                border-radius: var(--radiusLarge);
+            }
+        }
+        .lien_mdp_oublie {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+/********** Page d'accueil ***********/
+main#accueil {
+    height: 100vh;
+
+    h1 {
+        font-family: "Pacifico";
+        font-size: 5rem;
+        color: var(--thirdColor);
+        background-color: var(--firstColor);
+        padding: var(--gouttiere);
+        border-radius: var(--radiusLarge);
+    }
+}
+
+/********** Page du formulaire d'utilisateur ***********/
+main#page_form_utilisateur {
+    height: 100vh;
+
+    form {
+        background-color: var(--firstColor);
+        padding: 60px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--gouttiere);
+
+        >div {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--gouttiere);
+        }
+
+        label {
+            font-family: "Pacifico";
+            width: 100%;
+            font-size: 1.5rem;
+            color: var(--secondColor);
+            text-shadow: 0px 0px 10px black;
+        }
+
+        input {
+            width: 100%;
+            height: 30px;
+            padding-left: 10px;
+            font-family: "Roboto";
+        }
+
+        input[type=submit] {
+            width: -moz-fit-content;
+            width: fit-content;
+            height: fit-content;
+            padding: 4px 32px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-family: "Pacifico";
+            font-size: 1.5rem;
+            background-color: var(--thirdColor);
+            color: var(--fifthColor);
+            border-radius: var(--radiusLarge);
+        }
+    }
+}

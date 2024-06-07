@@ -91,7 +91,7 @@ class _model {
      */
     protected function addField($infosChamp) {
         // On instancie un objet _field du champ
-        $this->fields[$infosChamp->name] = new _field($infosChamp);
+        $this->fields[$infosChamp->name] = new _field($infosChamp,$this->table);
     }
     
     /**
@@ -109,12 +109,16 @@ class _model {
         // On récupère le champ qui correspond à l'id
         $this->champ_id = $infosModele->champ_id;
         // On parcourt les liens pour en construire le tableau
-        foreach ($infosModele->links as $value) {
-            $this->links[] = [$value->table => $value->cle];
+        if(isSet($infosModele->links)) {
+            foreach ($infosModele->links as $value) {
+                $this->links[] = [$value->table => $value->cle];
+            }
         }
         // On parcourt les actions pour en construire le tableau
-        foreach ($infosModele->actions as $value) {
-            $this->actions[$value->action] = $value->url;
+        if(isSet($infosModele->actions)) {
+            foreach ($infosModele->actions as $value) {
+                $this->actions[$value->action] = $value->url;
+            }
         }
         
         // On parcourt tous les champs présent dans le fichier
@@ -269,6 +273,7 @@ class _model {
      */
     function loadFromTab($data) {
         //On parcourt tous les champs
+        
         foreach($this->fields as $fieldName => $field){
             //Pour chaque champ on indique la valeur dans l'attribut de l'objet correspondant
             $this->fields[$fieldName]->setValue($data[$fieldName]);
@@ -539,16 +544,29 @@ class _model {
 
         // Si on a des paramètres d'URL, on les mets en forme et on les ajoute à l'URL 
         if(!empty($paramURL)) $urlAction .= "?". http_build_query($paramURL);
-            
-        //On commence le formulaire
-        $templateHTML .= '<form action="' . $urlAction . '" method="post" id="form_' . $this->table . '">';
 
+        // On prépare un template pour les inputs
+        $templateInputHTML = "";
+        // On prépare le enctype
+        $enctype = "";
         //On parcourt tous les champs et on demande le code HTML de chacun
         foreach ($this->fields as $keyField => $field) {
             $input = (isSet($listInput[$keyField])) ? $listInput[$keyField] : [];
-            $templateHTML .= $field->getElementFormulaire($input, $acces);
+            // On test si on a besoin de mettre l'encodage pour les pièce jointes dans le cas où un input file serait présent
+            if(!empty($field->get("input"))) {
+                if($field->get("input")["type"] === "file") {
+                    $enctype = 'enctype="multipart/form-data"';
+                }
+            }
+            $templateInputHTML .= $field->getElementFormulaire($input, $acces);
         }
 
+        // On construit le formulaire
+        // En-tête
+        $templateHTML .= '<form action="' . $urlAction . '" method="post" id="form_' . $this->table . '" ' . $enctype . '>';
+        // Inputs
+        $templateHTML .= $templateInputHTML;
+        // Boutons
         $templateHTML .= '<div class="buttonForm">';
         $templateHTML .= $buttonAnnuler;
         $templateHTML .= $buttonSubmit;
@@ -567,11 +585,13 @@ class _model {
      * @return boolean True si tout est OK sinon False
      */
     function verifParamsFormulaire($arrayPost){
+        var_dump($arrayPost);
         //On parcourt les champs de l'objet
         foreach ($this->fields as $keyField => $field) {
             // Si le champ est bien dans les paramètres fournis
             if(isSet($arrayPost[$keyField])){
                 if(!$field->setValueForm($arrayPost[$keyField],$arrayPost)) {
+                    var_dump($keyField);
                     return false;
                 }
             }

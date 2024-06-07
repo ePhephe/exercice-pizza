@@ -234,7 +234,10 @@ class _requete {
             return false;
         }
 
-        return $this->objet->lastInsertId();
+        // On récupère la base de données
+        $bdd = static::bdd();
+
+        return $bdd->lastInsertId();
     }
 
     /**

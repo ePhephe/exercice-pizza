@@ -69,7 +69,7 @@ class se_connecter extends _controller {
 
             return false;
         }
-
+        
         // On récupère nos paramètres dans des variables
         $strLogin = $this->parametres["login"];
         $strPassword = $this->parametres["password"];
@@ -84,6 +84,8 @@ class se_connecter extends _controller {
             $this->paramSortie["arrayResult"]["message"] = "Vos informations de connexion sont incorrectes.";
             //On récupère le formulaire de connexion depuis un objet utilisateur
             $this->paramSortie["htmlFormulaireConnexion"] = $objUtilisateur->formulaireConnexion();
+
+            return false;
         }
 
         //On connecte la session

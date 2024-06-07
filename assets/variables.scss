@@ -1,31 +1,26 @@
 @font-face {
-    font-family: 'Montserrat';
-    src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf");
+    font-family: 'Pacifico';
+    src: url("../fonts/Pacifico/Pacifico-Regular.ttf");
 }
 
 @font-face {
-    font-family: 'Roboto Regular';
+    font-family: 'Roboto';
     src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 
-@font-face {
-    font-family: 'Roboto Light';
-    src: url("../fonts/Roboto/Roboto-Light.ttf");
-}
 
 
 :root {
     // TYPOGRAPHIE
-    --fontTitre: 'Montserrat';
-    --fontTexte: 'Roboto Regular';
-    --fontAlt: 'Roboto Light';
+    --fontTitre: 'Pacifico';
+    --fontTexte: 'Roboto';
 
     // Palette de couleurs 
-    --firstColor: #002535;
-    --secondColor: #2A83A1;
-    --thirdColor: #6ECBDA;
-    --fourthColor: #E62F1D;
-    --fifthColor: #C92E1C;
+    --firstColor: #E74C3C;
+    --secondColor: #F1C40F;
+    --thirdColor: #27AE60;
+    --fourthColor: #D35400;
+    --fifthColor: #FFFFFF;
 
     // Couleurs standards 
     --succesColor: hsl(113, 53%, 53%);
