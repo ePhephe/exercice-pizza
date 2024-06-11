@@ -8,7 +8,7 @@
         <!-- Menu de navigation principale -->
         <nav class="menu">
             <ul class="large-12-12 flex align-center justify-between gap">
-                <li><a href="afficher_form_pizza.php?id=<?= _session::getSession()->id() ?>&action=create">Créer une nouvelle pizza</a></li>
+                <li><a href="afficher_form_pizza.php?action=create">Créer une nouvelle pizza</a></li>
                 <li><a href="lister_pizzas.php">Mes pizzas</a></li>
             </ul>
         </nav>

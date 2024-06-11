@@ -57,16 +57,17 @@ class composition extends _model {
             // Si on est sur les ingrédient alors affichage en checkbox et on demande le dosage
             if($infosChamp["autorised_value"] === "I") {
                 $templateHTML .= '<input type="checkbox" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
-                    <label for="coding">'.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>
-                    <img src="" alt="">';
+                    <label for="c_ref_ingredient_'.$idIngredient.'"><img src="'.$objIngredient->get("i_ref_piecejointe_photo")->getObjet()->get_url().'" alt="">
+                    '.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>';
                 $templateHTML .= $this->get("c_dosage_ingredient")->getElementFormulaire();
                 $templateHTML .= '</label>';
             }
             // Sinon on est sur de la radiobox
             else {
                 $templateHTML .= '<input type="radio" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
-                    <label for="coding">'.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>
-                    <img src="" alt=""></label>';
+                    <label for="c_ref_ingredient_'.$idIngredient.'"><img src="'.$objIngredient->get("i_ref_piecejointe_photo")->getObjet()->get_url().'" alt="">
+                    '.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>
+                    </label>';
             }
             $templateHTML .= '</div>';
         }

@@ -477,7 +477,7 @@ class _model {
      * @param  array $listInput Liste de champs spécifiques attendus (Tableau vide - Valeur par défaut)
      * @return mixed Code HTML ou false s'il y a une erreur
      */
-    function getFormulaire($action,$json=false,$listInput=[]){
+    function getFormulaire($action, $json=false, $withButton=true, $paramAction =[], $listInput=[]){
         // On initialise le template HTML
         $templateHTML = '';
         // Quelle vision des champ (vide, readonly, disabled)
@@ -552,7 +552,7 @@ class _model {
         if($json === true) $paramURL["json"] = true;
 
         // Si on a des paramètres d'URL, on les mets en forme et on les ajoute à l'URL 
-        if(!empty($paramURL)) $urlAction .= "?". http_build_query($paramURL);
+        if(!empty($paramURL)) $urlAction .= "?". http_build_query(array_merge($paramURL,$paramAction));
 
         // On prépare un template pour les inputs
         $templateInputHTML = "";
@@ -577,10 +577,12 @@ class _model {
         // Inputs
         $templateHTML .= $templateInputHTML;
         // Boutons
-        $templateHTML .= '<div class="buttonForm">';
-        $templateHTML .= $buttonAnnuler;
-        $templateHTML .= $buttonSubmit;
-        $templateHTML .= '</div>';
+        if($withButton === true) {
+            $templateHTML .= '<div class="buttonForm">';
+            $templateHTML .= $buttonAnnuler;
+            $templateHTML .= $buttonSubmit;
+            $templateHTML .= '</div>';
+        }
 
         //On termine le formulaire
         $templateHTML .= '</form>';

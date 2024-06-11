@@ -117,7 +117,6 @@ class piecejointe extends _model {
         $this->get("pj_nom_fichier")->setValue($fileName);
         $this->get("pj_type_fichier")->setValue($arrayFile["type"]);
         $this->get("pj_taille")->setValue($arrayFile["size"]);
-        var_dump( $this->get("pj_taille"));
         $this->get("pj_statut")->setValue("V");
 
         // On construit la date

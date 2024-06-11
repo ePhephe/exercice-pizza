@@ -217,6 +217,7 @@ main#page_form_pizza {
             &#div_p_nom {
                 width: 25%;
             }
+
             &#div_p_description {
                 width : 70%;
             }
@@ -231,6 +232,7 @@ main#page_form_pizza {
         li {
             font-size: 1.2rem;
         }
+
         .separateur_etapes_pizza {
             font-family: "Pacifico";
             font-size: 1.5rem;
@@ -239,32 +241,72 @@ main#page_form_pizza {
     }
 
     #formComposition {
+        width: 100%;
+        
         form {
+            width: 100%;
+
             >div {
                 width: 100%;
+
                 &#div_c_ref_pizza {
                     display: none;
                 }
+
                 &#div_c_ref_ingredient{
+
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: space-between;
+
                     >div {
-                        width: 30%;
+                        width: 20%;
+
                         label {
                             text-align: center;
+                            display: flex;
+                            flex-direction: column;
+
+                            img {
+                                height: 180px;
+                                object-fit: cover;
+                                margin-bottom: 10px;
+                                border: 2px solid var(--secondColor);
+                            }
                         }
+
                         div.description {
                             font-family: "Roboto";
                             font-size: 0.8rem;
                             color: black;
                             text-shadow: none;
-                            margin-top: var(--gouttiere);
+                            margin-top: 10px;
                         }
                     }
                 }
             }
             
+        }
+    }
+
+    #div_c_dosage_ingredient {
+        margin-top: 10px;
+        gap: 0;
+        justify-content: space-between;
+
+        >div {
+            width: 10%;
+            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            
+            label {
+                font-size: 1rem;
+                color: var(--secondColor);
+                writing-mode: vertical-lr;
+                text-orientation: mixed;    
+            }
         }
     }
 

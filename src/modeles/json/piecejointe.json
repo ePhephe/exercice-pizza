@@ -10,6 +10,15 @@
             "nomObjet": "",
             "unicite": true,
             "visibilite": true,
+            "input": {
+                "name": "pj_nom_fichier",
+                "id": "pj_nom_fichier",
+                "placeholder": "",
+                "type": "file",
+                "step": "",
+                "confirmationNeeded": false,
+                "accept": "image/*"
+            },
             "contraintes": {
                 "min_length": 1,
                 "max_length": 100
@@ -84,6 +93,28 @@
                     "valeur": "Supprimé"
                 }
             ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "create",
+            "url": "creer_pj"
+        },
+        {
+            "action": "read",
+            "url": "detail_pj"
+        },
+        {
+            "action": "update",
+            "url": "modifier_pj"
+        },
+        {
+            "action": "delete",
+            "url": "supprimer_pj"
+        },
+        {
+            "action": "list",
+            "url": "lister_pj"
         }
     ]
 }

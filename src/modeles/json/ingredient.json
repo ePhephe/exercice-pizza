@@ -107,7 +107,7 @@
             "name": "i_ref_piecejointe_photo",
             "type": "integer",
             "libelle": "Photo de l'ingrédient : ",
-            "nomObjet": "",
+            "nomObjet": "piecejointe",
             "unicite": false,
             "visibilite": true,
             "input": {

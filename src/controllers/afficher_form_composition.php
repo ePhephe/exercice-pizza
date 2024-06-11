@@ -43,6 +43,7 @@ class afficher_form_composition extends _controller {
      */
     function verifParams() {
         if(!isSet($this->parametres["type"])) $this->parametres["type"] = "all";
+        if(!isSet($this->parametres["idpizza"])) $this->parametres["idpizza"] = 0;
         return parent::verifParams();
     }
 
@@ -59,10 +60,16 @@ class afficher_form_composition extends _controller {
         
         // On prépare un objet de la classe composition
         $objComposition = new composition();
-        $this->paramSortie["result"] = $objComposition->getFormulaire("create",true,[
-            "c_ref_ingredient" => ["autorised_value" => $this->parametres["type"]],
-            "c_dosage_ingredient" => ["display" => "none"]
-        ]);
+        $this->paramSortie["result"] = $objComposition->getFormulaire(
+            "create",
+            true,
+            false,
+            ["idpizza" => $this->parametres["idpizza"], "type" => $this->parametres["type"]],
+            [
+                "c_ref_ingredient" => ["autorised_value" => $this->parametres["type"]],
+                "c_dosage_ingredient" => ["display" => "none"]
+            ]
+        );
 
         $this->makeRetour(true,"succes","ok");
     }

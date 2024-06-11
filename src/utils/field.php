@@ -537,7 +537,7 @@ class _field {
                         $choixRadio = '<input type="radio" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . $i . '" value="'.$key.'">';
                         $choixRadio .= '<label for="' . $this->get("input")["id"] . $i . '">' . $value . '</label>';
                         
-                        $templateHTML .= $choixRadio;
+                        $templateHTML .= '<div>'.$choixRadio.'</div>';
                         $i++;
                     }
                     

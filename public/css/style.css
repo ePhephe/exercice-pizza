@@ -993,6 +993,12 @@ main#page_form_pizza nav .separateur_etapes_pizza {
   font-size: 1.5rem;
   color: var(--secondColor);
 }
+main#page_form_pizza #formComposition {
+  width: 100%;
+}
+main#page_form_pizza #formComposition form {
+  width: 100%;
+}
 main#page_form_pizza #formComposition form > div {
   width: 100%;
 }
@@ -1005,17 +1011,43 @@ main#page_form_pizza #formComposition form > div#div_c_ref_ingredient {
   justify-content: space-between;
 }
 main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div {
-  width: 30%;
+  width: 20%;
 }
 main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div label {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div label img {
+  height: 180px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid var(--secondColor);
 }
 main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div div.description {
   font-family: "Roboto";
   font-size: 0.8rem;
   color: black;
   text-shadow: none;
-  margin-top: var(--gouttiere);
+  margin-top: 10px;
+}
+main#page_form_pizza #div_c_dosage_ingredient {
+  margin-top: 10px;
+  gap: 0;
+  justify-content: space-between;
+}
+main#page_form_pizza #div_c_dosage_ingredient > div {
+  width: 10%;
+  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+main#page_form_pizza #div_c_dosage_ingredient > div label {
+  font-size: 1rem;
+  color: var(--secondColor);
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
 }
 
 /*# sourceMappingURL=style.css.map */
