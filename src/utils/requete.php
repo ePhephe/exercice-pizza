@@ -333,7 +333,7 @@ class _requete {
         }
 
         // On parcourt toutes les tables pour récupérer le champ id de chacune
-        foreach($this->tables as $table) {
+        foreach($this->tables as $key => $table) {
             // On a le nom du champ dans $nomchamp
             $arrayResultat[] = "`".$table->champ_id()."`";
         }

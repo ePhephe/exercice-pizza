@@ -35,7 +35,15 @@
             "libelle": "Référence à la pizza ",
             "nomObjet": "pizza",
             "unicite": false,
-            "visibilite": true
+            "visibilite": true,
+            "input": {
+                "name": "c_ref_pizza",
+                "id": "c_ref_pizza",
+                "placeholder": "",
+                "type": "hidden",
+                "step": "",
+                "confirmationNeeded": false
+            }
         },
         {
             "name": "c_prix_ingredient",
@@ -53,14 +61,13 @@
             "name": "c_dosage_ingredient",
             "type": "float",
             "libelle": "Dosage de l'ingrédient dans cette pizza ",
-            "nomObjet": "pizza",
             "unicite": false,
             "visibilite": true,
             "input": {
                 "name": "c_dosage_ingredient",
                 "id": "c_dosage_ingredient",
                 "placeholder": "Choisissez la quantité d'ingrédient souhaité ",
-                "type": "radiobox",
+                "type": "radio",
                 "step": "",
                 "confirmationNeeded": false
             },
@@ -94,6 +101,28 @@
                     "valeur": "+++"
                 }
             ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "create",
+            "url": "creer_composition"
+        },
+        {
+            "action": "read",
+            "url": "detail_composition"
+        },
+        {
+            "action": "update",
+            "url": "modifier_composition"
+        },
+        {
+            "action": "delete",
+            "url": "supprimer_composition"
+        },
+        {
+            "action": "list",
+            "url": "lister_composition"
         }
     ]
 }

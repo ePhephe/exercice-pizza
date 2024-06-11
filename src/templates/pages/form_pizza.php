@@ -10,10 +10,10 @@
 
 ?>
 
-<div class="background_app">
+<div class="background-image">
 
 </div>
-<main class="container-full flex align-center justify-center direction-column">
+<main class="container-full flex align-center justify-center direction-column" id="page_form_pizza">
     <?php 
 
         // Formulaire général de la pizza
@@ -24,17 +24,21 @@
     
     ?>
 
-    <nav>
-        <ul>
-            <li><a href="">Taille</a></li>
-            <li>></li>
-            <li><a href="">Pâte</a></li>
-            <li>></li>
-            <li><a href="">Base</a></li>
-            <li>></li>
-            <li><a href="">Ingrédients</a></li>
+    <nav class="large-12-12" id="liensComposition">
+        <ul class="flex justify-between align-center">
+            <li class="large-3-12 flex justify-center"><a data-type="T" href="">1. Taille</a></li>
+            <li class="separateur_etapes_pizza">></li>
+            <li class="large-3-12 flex justify-center"><a data-type="P" href="">2. Pâte</a></li>
+            <li class="separateur_etapes_pizza">></li>
+            <li class="large-3-12 flex justify-center"><a data-type="B" href="">3. Base</a></li>
+            <li class="separateur_etapes_pizza">></li>
+            <li class="large-3-12 flex justify-center"><a data-type="I" href="">4. Ingrédients</a></li>
         </ul>
     </nav>
+
+    <div id="formComposition">
+
+    </div>
 
     <?php
 
@@ -42,3 +46,4 @@
         include_once("src/templates/fragments/message.php");
     ?>
 </main>
+<script src="public/js/form_pizza.js"></script>

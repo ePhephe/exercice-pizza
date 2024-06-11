@@ -169,6 +169,15 @@ class _model {
     }
 
     /**
+     * Retourne la valeur du champ
+     *
+     * @return mixed Valeur du champ
+     */
+    function getValue($fieldName) {
+        return $this->fields[$fieldName]->getValue();
+    }
+
+    /**
      * Retourne le tableau des objets fields
      *
      * @return array Tableau des objets fields
@@ -558,6 +567,7 @@ class _model {
                     $enctype = 'enctype="multipart/form-data"';
                 }
             }
+            
             $templateInputHTML .= $field->getElementFormulaire($input, $acces);
         }
 
@@ -585,13 +595,11 @@ class _model {
      * @return boolean True si tout est OK sinon False
      */
     function verifParamsFormulaire($arrayPost){
-        var_dump($arrayPost);
         //On parcourt les champs de l'objet
         foreach ($this->fields as $keyField => $field) {
             // Si le champ est bien dans les paramètres fournis
             if(isSet($arrayPost[$keyField])){
                 if(!$field->setValueForm($arrayPost[$keyField],$arrayPost)) {
-                    var_dump($keyField);
                     return false;
                 }
             }

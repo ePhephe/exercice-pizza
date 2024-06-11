@@ -16,7 +16,7 @@
         {
             "name": "p_nom",
             "type": "text",
-            "libelle": "Nom de la pizza : ",
+            "libelle": "Nom de la pizza",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
@@ -36,7 +36,7 @@
         {
             "name": "p_description",
             "type": "text",
-            "libelle": "Descrivez votre pizza : ",
+            "libelle": "Descrivez votre pizza",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
@@ -56,7 +56,7 @@
         {
             "name": "p_statut",
             "type": "text",
-            "libelle": "Statut : ",
+            "libelle": "Statut",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,
@@ -82,7 +82,7 @@
         {
             "name": "p_ref_piecejointe_photo",
             "type": "integer",
-            "libelle": "Photo du chef d'oeuvre : ",
+            "libelle": "Photo du chef d'oeuvre",
             "nomObjet": "",
             "unicite": false,
             "visibilite": true,

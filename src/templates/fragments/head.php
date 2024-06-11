@@ -6,6 +6,6 @@
     <title><?= $title ?></title>
     <meta name="description" content="<?= $metadescription ?>">
     <link rel="stylesheet" href="public/css/style.css">
-    <script src="public/js/app.js"></script>
+    <script defer src="public/js/app.js"></script>
 </head>
 <body>

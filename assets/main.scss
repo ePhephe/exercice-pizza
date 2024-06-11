@@ -44,6 +44,7 @@ header {
     .compte a {
         font-family: "Roboto";
         font-weight: 700;
+        font-size: 1rem;
     }
 }
 .header_height {
@@ -77,6 +78,71 @@ header {
         border-radius: 50%;
     }
 }
+// Formulaire
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gouttiere);
+    background-color: var(--firstColor);
+    padding: 60px;
+    border-radius: var(--radiusLarge);
+
+    div {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gouttiere);
+    }
+    label {
+        font-family: "Pacifico";
+        width: 100%;
+        font-size: 1.5rem;
+        color: var(--secondColor);
+        text-shadow: 0px 0px 10px black;
+    }
+    input {
+        width: 100%;
+        height: 30px;
+        padding-left: 10px;
+        font-family: "Roboto";
+    }
+    textarea {
+        width: 100%;
+        height: 50px;
+    }
+    .buttonForm {
+        justify-content: center;    
+        width: 100%;
+
+        input[type=submit],input[type=button] {
+            width: -moz-fit-content;
+            width: fit-content;
+            height: fit-content;
+            padding: 4px 32px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-family: "Pacifico";
+            font-size: 1.5rem;
+            background-color: var(--thirdColor);
+            color: var(--fifthColor);
+            border-radius: var(--radiusLarge);
+        }
+    }
+
+    input[type=submit],input[type=button] {
+        width: -moz-fit-content;
+        width: fit-content;
+        height: fit-content;
+        padding: 4px 32px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: "Pacifico";
+        font-size: 1.5rem;
+        background-color: var(--thirdColor);
+        color: var(--fifthColor);
+        border-radius: var(--radiusLarge);
+    }
+}
 
 /********** Page de connexion ***********/
 main#template_form_connexion {
@@ -95,39 +161,8 @@ main#template_form_connexion {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            padding: 0;
             gap: var(--gouttiere);
-            div {
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                gap: var(--gouttiere);
-            }
-            label {
-                font-family: "Pacifico";
-                width: 100%;
-                font-size: 1.5rem;
-                color: var(--secondColor);
-                text-shadow: 0px 0px 10px black;
-            }
-            input {
-                width: 100%;
-                height: 30px;
-                padding-left: 10px;
-                font-family: "Roboto";
-            }
-            input[type=submit] {
-                width: -moz-fit-content;
-                width: fit-content;
-                height: fit-content;
-                padding: 4px 32px;
-                margin-top: 20px;
-                cursor: pointer;
-                font-family: "Pacifico";
-                font-size: 1.5rem;
-                background-color: var(--thirdColor);
-                color: var(--fifthColor);
-                border-radius: var(--radiusLarge);
-            }
         }
         .lien_mdp_oublie {
             width: 100%;
@@ -139,7 +174,7 @@ main#template_form_connexion {
 
 /********** Page d'accueil ***********/
 main#accueil {
-    height: 100vh;
+    height: calc(100vh - 100px);
 
     h1 {
         font-family: "Pacifico";
@@ -153,51 +188,84 @@ main#accueil {
 
 /********** Page du formulaire d'utilisateur ***********/
 main#page_form_utilisateur {
-    height: 100vh;
+    height: calc(100vh - 100px);
 
     form {
-        background-color: var(--firstColor);
-        padding: 60px;
-
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: var(--gouttiere);
+        justify-content: space-between;
+        width: 80%;
 
         >div {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--gouttiere);
-        }
-
-        label {
-            font-family: "Pacifico";
-            width: 100%;
-            font-size: 1.5rem;
-            color: var(--secondColor);
-            text-shadow: 0px 0px 10px black;
-        }
-
-        input {
-            width: 100%;
-            height: 30px;
-            padding-left: 10px;
-            font-family: "Roboto";
-        }
-
-        input[type=submit] {
-            width: -moz-fit-content;
-            width: fit-content;
-            height: fit-content;
-            padding: 4px 32px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-family: "Pacifico";
-            font-size: 1.5rem;
-            background-color: var(--thirdColor);
-            color: var(--fifthColor);
-            border-radius: var(--radiusLarge);
+            width: 45%;
+            &.buttonForm {
+                width: 100%;
+            }
         }
     }
+}
+
+/********** Page du formulaire pizza ***********/
+main#page_form_pizza {
+
+    form {
+        justify-content: space-between;
+        padding: 40px;
+        margin: 40px 0;
+
+        >div {
+            width: 45%;
+
+            &#div_p_nom {
+                width: 25%;
+            }
+            &#div_p_description {
+                width : 70%;
+            }
+        }
+    }
+
+    nav {
+        background-color: var(--thirdColor);
+        border-radius: var(--radiusLarge);
+        padding: 10px;
+
+        li {
+            font-size: 1.2rem;
+        }
+        .separateur_etapes_pizza {
+            font-family: "Pacifico";
+            font-size: 1.5rem;
+            color: var(--secondColor);
+        }
+    }
+
+    #formComposition {
+        form {
+            >div {
+                width: 100%;
+                &#div_c_ref_pizza {
+                    display: none;
+                }
+                &#div_c_ref_ingredient{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    >div {
+                        width: 30%;
+                        label {
+                            text-align: center;
+                        }
+                        div.description {
+                            font-family: "Roboto";
+                            font-size: 0.8rem;
+                            color: black;
+                            text-shadow: none;
+                            margin-top: var(--gouttiere);
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+
 }

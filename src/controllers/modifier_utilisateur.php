@@ -51,7 +51,7 @@ class modifier_utilisateur extends _controller {
     function execute(){
         // On commence par appeler la vérification des paramètres
         if(!$this->verifParams()) {
-            $this->makeRetour(false,"param","Les paramètres fournis ne sont pas corrects.");
+            $this->makeRetour(false,"param","(1) Les paramètres fournis ne sont pas corrects.");
         }
         // On instancie l'objet de l'utilisateur passé en paramètre
         $nomObjet = $this->session->getTableUser();
@@ -71,7 +71,7 @@ class modifier_utilisateur extends _controller {
             }
         }
         else {
-            $this->makeRetour(false,"param","Les paramètres fournis ne sont pas corrects.");
+            $this->makeRetour(false,"param","(2) Les paramètres fournis ne sont pas corrects.");
         }
     }
 }

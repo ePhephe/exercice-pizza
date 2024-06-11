@@ -216,8 +216,17 @@ class _field {
      * @return boolean - True si la valeur est acceptée sinon False
      */
     function setValueForm($value,$arrayPOST){
+        
         //On vérifie qu'un input HTML correspond à ce champ
         if(!empty($this->get("input"))) {
+            // Si on est sur un mot de passe
+            if($this->get("input")["type"]==="password") {
+                // Si le mot de passe est vide, on return true sans changer de valeur
+                if(empty($value)) {
+                    return true;
+                }
+            }
+
             // Si on demande une confirmation du champ, il faut avoir le paramètre
             if($this->get("input")["confirmationNeeded"] === true && !isSet($arrayPOST[$this->get("name")."Confirm"])){
                 return false;
@@ -234,15 +243,21 @@ class _field {
                 return $this->setValue($arrayPOST[$this->get("name")."Hidden"]);
             }
             else if($this->get("input")["type"] === "file") {
-                // On instancie un objet de pièce jointe
-                $objetPJ = new piecejointe();
-                $resultatUpload = $objetPJ->addFile($this);
-                // Selon le résultat, on set la valeur ou on retourn false
-                if($resultatUpload === false){
-                    return false;
+                // Si il n'y a pas de fichier, on ne met pas à jour la valeur et on retourne true sans erreur
+                if(!empty($arrayPOST[$this->get("name")]["name"])) {
+                    // On instancie un objet de pièce jointe
+                    $objetPJ = new piecejointe();
+                    $resultatUpload = $objetPJ->addFile($this);
+                    // Selon le résultat, on set la valeur ou on retourn false
+                    if($resultatUpload === false){
+                        return false;
+                    }
+                    else {
+                        return $this->setValue($resultatUpload); 
+                    }
                 }
                 else {
-                    return $this->setValue($resultatUpload); 
+                    return true;
                 }
             }
             else {
@@ -434,6 +449,18 @@ class _field {
      * @return mixed Code HTML du champ sinon False en cas d'erreur
      */
     function getElementFormulaire($infosChamp = [], $acces = ""){
+        // On vérifie si une méthode get_element_form_fieldname existe dans la classe de l'objet de la table, dans ce cas on l'appelle
+        //On instancie
+        if(method_exists($this->table,"get_element_form_$this->name")) {
+            $obj = new $this->table ();
+            return call_user_func([$obj,"get_element_form_$this->name"], $infosChamp, $acces);
+        }
+
+        if(isSet($infosChamp["display"])){
+            if($infosChamp["display"] === "none")
+                return "";
+        }
+
         // On vérifie si on a un readonly spécifique pour le champ
         if(isSet($infosChamp["acces"]))
             $acces = $infosChamp["acces"];
@@ -502,8 +529,34 @@ class _field {
                     # code...
                     break;
                 //Si on est sur un radiobox
-                case 'radiobox':
-                    # code...
+                case 'radio':
+                    $templateHTML .= $divInputGlobal;
+                    // On enclenche un compteur pour gérer les id
+                    $i = 0;
+                    foreach ($this->get("listCleValeur") as $key => $value) {
+                        $choixRadio = '<input type="radio" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . $i . '" value="'.$key.'">';
+                        $choixRadio .= '<label for="' . $this->get("input")["id"] . $i . '">' . $value . '</label>';
+                        
+                        $templateHTML .= $choixRadio;
+                        $i++;
+                    }
+                    
+                    $templateHTML .= '</div>';
+                    break;
+                case 'hidden':
+                    // On construit le champ
+                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '" ';
+
+                    // Si on a une valeur pour le champ
+                    if(!empty($this->getValue())){
+                        $inputValue = 'value="' . $this->getValue() . '" ';
+                    }
+                    else {
+                        $inputValue = "";
+                    }
+
+                    // On construit le template
+                    $templateHTML = $divInputGlobal.$inputPrincipal.$inputValue.'</div></div>';
                     break;
                 //Si on est sur un radiobox
                 case 'file':
