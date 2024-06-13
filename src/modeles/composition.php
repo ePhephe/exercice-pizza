@@ -28,11 +28,11 @@ class composition extends _model {
      */
 
     /**
-     * get_element_form_c_ref_ingredient
+     * Retourne le formulaire pour ajouter des ingrédients
      *
-     * @param  mixed $infosChamp
-     * @param  mixed $acces
-     * @return void
+     * @param  array $infosChamp Informations sur le champ
+     * @param  string $acces Accès aux champs
+     * @return string Code HTML correspondant
      */
     function get_element_form_c_ref_ingredient($infosChamp, $acces){
         // On initialise le template HTML
@@ -56,7 +56,7 @@ class composition extends _model {
             
             // Si on est sur les ingrédient alors affichage en checkbox et on demande le dosage
             if($infosChamp["autorised_value"] === "I") {
-                $templateHTML .= '<input type="checkbox" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
+                $templateHTML .= '<input data-type="'.$infosChamp["autorised_value"].'" type="checkbox" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
                     <label for="c_ref_ingredient_'.$idIngredient.'"><img src="'.$objIngredient->get("i_ref_piecejointe_photo")->getObjet()->get_url().'" alt="">
                     '.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>';
                 $templateHTML .= $this->get("c_dosage_ingredient")->getElementFormulaire();
@@ -64,7 +64,7 @@ class composition extends _model {
             }
             // Sinon on est sur de la radiobox
             else {
-                $templateHTML .= '<input type="radio" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
+                $templateHTML .= '<input data-type="'.$infosChamp["autorised_value"].'" type="radio" id="c_ref_ingredient_'.$idIngredient.'" name="c_ref_ingredient" value="'.$idIngredient.'" />
                     <label for="c_ref_ingredient_'.$idIngredient.'"><img src="'.$objIngredient->get("i_ref_piecejointe_photo")->getObjet()->get_url().'" alt="">
                     '.$objIngredient->getValue("i_nom").' <div class="description">'.$objIngredient->getValue("i_description").'</div>
                     </label>';
@@ -77,4 +77,7 @@ class composition extends _model {
         return $templateHTML;
     }
     
+    function update_prix(){
+        
+    }
 }

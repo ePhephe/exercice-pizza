@@ -193,10 +193,12 @@ class _requete {
             // Clause FROM
             $this->requete .= $this->makeFrom();
             // Clause WHERE
-            $this->requete .= " WHERE " . $this->makeFiltres();
-            // Complément à la clause WHERE si partitionnement
-            if($this->get("partitionnement") === true) {
-                $this->requete .= $this->makeFiltrePartitionnement();
+            if(!empty($this->get("filtres")) || $this->get("partitionnement") === true) {
+                $this->requete .= " WHERE " . $this->makeFiltres();
+                // Complément à la clause WHERE si partitionnement
+                if($this->get("partitionnement") === true) {
+                    $this->requete .= $this->makeFiltrePartitionnement();
+                }
             }
             // Clause ORDER
             $this->requete .= $this->makeTri();

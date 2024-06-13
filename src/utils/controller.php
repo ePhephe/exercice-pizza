@@ -116,7 +116,6 @@ class _controller {
                 // Si on est dans le cas d'un paramètre qui serait un formulaire entier et qu'il est required TRUE
                 if($param === "form" && $infosParam["required"] === true) {
                     $superglobal = array_merge($superglobal,$_FILES);
-                    $superglobal = array_merge($superglobal,$_FILES);
                     // On vérifie que la méthode par laquelle passe le formulaire n'est pas vide
                     if(empty($superglobal)) {
                         return false;

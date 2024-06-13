@@ -21,6 +21,9 @@
 
         // Liste de la composition s'il y a
         if(!empty($parametres["arrayCompositionPizza"])) echo $parametres["arrayCompositionPizza"];
+
+        // Liste de la composition s'il y a
+        if(!empty($parametres["id"])) {
     
     ?>
 
@@ -41,7 +44,7 @@
     </div>
 
     <?php
-
+        }
         // Fragment pour l'affichage de message de retour
         include_once("src/templates/fragments/message.php");
     ?>

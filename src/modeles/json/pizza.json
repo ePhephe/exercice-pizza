@@ -83,7 +83,7 @@
             "name": "p_ref_piecejointe_photo",
             "type": "integer",
             "libelle": "Photo du chef d'oeuvre",
-            "nomObjet": "",
+            "nomObjet": "piecejointe",
             "unicite": false,
             "visibilite": true,
             "input": {

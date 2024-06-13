@@ -74,3 +74,38 @@ function redirectFormulaire(url){
     window.location = url;
 }
 
+/**
+ * Retourne un tableau des paramètres d'une URL ou un paramètre seulement s'il est fourni
+ * 
+ * @param {string} url URL à décomposer
+ * @param {string} param Paramètre à récupérer
+ * @returns Tableau des paramètres ou valeur d'un paramètre
+ */
+function getQueryParams(url,param = ``) {
+    // Création d'un objet URL
+    let urlObj = new URL(url);
+    
+    // Création d'un tableau pour stocker les paramètres ou d'une variable pour stocker le paramètre
+    let params = [];
+    let valeur = ``;
+    
+    // Utilisation de la méthode searchParams pour parcourir les paramètres
+    urlObj.searchParams.forEach((value, key) => {
+        // Si on a un paramètre de la fonction égal à un des paramètres, on le retour
+        if(key===param) {
+            valeur = value;
+        }
+
+        // On ajoute juste le paramètre dans le tableau
+        params[key] = value;
+    });
+
+    if(param != ``) {
+        return valeur;
+    }
+    else {
+        // On retourne le tableau de paramètres
+        return params;
+    }
+}
+

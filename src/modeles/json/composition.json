@@ -46,7 +46,7 @@
             }
         },
         {
-            "name": "c_prix_ingredient",
+            "name": "c_prix_ingredient_pizza",
             "type": "float",
             "libelle": "Prix de l'ingrédient dans cette pizza ",
             "nomObjet": "pizza",

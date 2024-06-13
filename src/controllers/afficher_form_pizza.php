@@ -77,6 +77,9 @@ class afficher_form_pizza extends _controller {
                 true,
                 ["idpizza" => $this->parametres["id"]]
             );
+
+            // On passe l'identifiant de la pizza
+            $this->paramSortie["id"] = $this->parametres["id"];
             
             // Listing de la composition de la pizza
             $this->paramSortie["arrayCompositionPizza"] = $objPizza->get_composition();
