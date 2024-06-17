@@ -22,7 +22,7 @@
             <a class="icon-delete" href="afficher_form_pizza.php?id=<?= $pizza->id() ?>&action=delete"><img src="public/images/icon_delete.png" alt=""></a>
             <img class="photo-pizza" src="<?= $pizza->get("p_ref_piecejointe_photo")->getObjet()->get_url() ?>" alt="">
             <div class="flex direction-column justify-between">
-                <h2><?= $pizza->get("p_nom")->getValue() ?></h2>
+                <h2><?= $pizza->get("p_nom")->getValue() ?> - <?= $pizza->get_prix_total() ?> €</h2>
                 <p><?= $pizza->get("p_description")->getValue() ?></p>
                 <div class="flex justify-center gap">
                     <a href="afficher_form_pizza.php?id=<?= $pizza->id() ?>&action=update">Modifier</a>

@@ -19,6 +19,7 @@ class modifier_composition_pizza extends _controller {
     // Paramètres du controller attendus en entrée
     protected $paramEntree = [ // ["nom_param1"=>["method"=>"POST","required"=>true],"nom_param2"=>["method"=>"POST","required"=>false]]
         "idpizza" => ["method" => "_GET", "required" => true],
+        "form" => ["method" => "_POST", "required" => true],
         "type" => ["method" => "_GET", "required" => true]
     ]; 
     // Type de retour
@@ -50,48 +51,27 @@ class modifier_composition_pizza extends _controller {
      */
     function execute(){
         // On commence par appeler la vérification des paramètres
-        var_dump($this->parametres);
+        if(!$this->verifParams()) {
+            $this->makeRetour(false,"echec","(0) Les paramètres fournis ne sont pas corrects");
+            return false;
+        }
 
         // On instancie un objet de la pizza
         $objPizza = new pizza($this->parametres["idpizza"]);
 
-        // On agit différement selon le type d'ingrédient qui est ajouter
-        switch ($this->parametres["type"]) {
-            case 'T':
-                // On lance la modification des ingrédients de la pizza
-                if($objPizza->update_ingredients($this->parametres["type"],$this->parametres["c_ref_ingredient"])){
-                    $this->makeRetour(true,"succes","La taille de votre pizza a été mise à jour.");
-                }
-                else {
-                    $this->makeRetour(false,"echec","(1) Echec dans la modification de la composition de la pizza.");
-                }
-                break;
-            case 'P':
-                // On lance la modification des ingrédients de la pizza
-                if($objPizza->update_ingredients($this->parametres["type"],$this->parametres["c_ref_ingredient"])){
-                    $this->makeRetour(true,"succes","La taille de votre pizza a été mise à jour.");
-                }
-                else {
-                    $this->makeRetour(false,"echec","(1) Echec dans la modification de la composition de la pizza.");
-                }
-                break;
-            case 'B':
-                // On lance la modification des ingrédients de la pizza
-                if($objPizza->update_ingredients($this->parametres["type"],$this->parametres["c_ref_ingredient"])){
-                    $this->makeRetour(true,"succes","La taille de votre pizza a été mise à jour.");
-                }
-                else {
-                    $this->makeRetour(false,"echec","(1) Echec dans la modification de la composition de la pizza.");
-                }
-                break;
-            case 'I':
-                # code...
-                break;
-            default:
-                # code...
-                break;
-        }
+        // On gère les ingrédients, si ce n'est pas un tableau on le transforme en tableau
+        $ingredients = [];
+        if(!is_array($this->parametres["form"]["c_ref_ingredient"]))
+            $ingredients[] = $this->parametres["form"]["c_ref_ingredient"];
+        else
+            $ingredients = $this->parametres["form"]["c_ref_ingredient"];
 
-        // On vérifie si la pizza est complète
+        // On lance la modification des ingrédients de la pizza
+        if($objPizza->update_ingredients($this->parametres["type"],$ingredients,$this->parametres["form"])){
+            $this->makeRetour(true,"succes","L'ingrédient de votre pizza a été mise à jour.");
+        }
+        else {
+            $this->makeRetour(false,"echec","(1) Echec dans la modification de la composition de la pizza.");
+        }
     }
 }

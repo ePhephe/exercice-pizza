@@ -263,7 +263,7 @@ class _requete {
                 $this->requete .= $this->makeFiltrePartitionnement();
             }
         }
-
+        
         //Execution de la requête
         if(!$this->execution()) {
             return false;
@@ -540,6 +540,7 @@ class _requete {
     function makeParamForSet($field) {
         // On construit la clé du paramètre
         $strCle = ":" . $field->get("name");          
+
         // Si le champ à une valeur, on la stocke dans le tableau des paramètres
         if ($field->get("value") != "") {
             $this->params[$strCle] = $field->get("value");

@@ -180,7 +180,7 @@ class _field {
             }
         }
 
-        if(array_key_exists("bdd",$this->get("formats")) && $this->get("type") === "datetime") {
+        if(array_key_exists("bdd",$this->get("formats")) && $this->get("type") === "datetime" && $value != "") {
             $tempDate = new DateTime($value);
             $value = $tempDate->format($this->get("formats")["bdd"]);
         }
@@ -316,7 +316,7 @@ class _field {
                 case 'float':
                     return 0.00;
                 case 'datetime':
-                    return new DateTime();
+                    return null;
                 default:
                     return "";
             }
@@ -381,7 +381,7 @@ class _field {
         if(!empty($this->listCleValeur)) {
             //Dans ce cas on retourne le libelle correspondant à la valeur du champ dans le tableau
             if($this->visibility === true)
-                return $this->listCleValeur[$this->value];
+                return (isSet($this->listCleValeur[$this->value]))?$this->listCleValeur[$this->value]: "";
             else
                 return false;
         }
@@ -446,14 +446,15 @@ class _field {
      *
      * @param array $infosChamp Tableau de paramètres qui viennent compléter le champ 
      * @param string $acces Définit l'accès au champ : readonly, disabled ou rien
+     * @param array $others Autres paramètres du formulaire à prendre en compte 
      * @return mixed Code HTML du champ sinon False en cas d'erreur
      */
-    function getElementFormulaire($infosChamp = [], $acces = ""){
+    function getElementFormulaire($infosChamp = [], $acces = "", $others = []){
         // On vérifie si une méthode get_element_form_fieldname existe dans la classe de l'objet de la table, dans ce cas on l'appelle
         //On instancie
         if(method_exists($this->table,"get_element_form_$this->name")) {
             $obj = new $this->table ();
-            return call_user_func([$obj,"get_element_form_$this->name"], $infosChamp, $acces);
+            return call_user_func([$obj,"get_element_form_$this->name"], $infosChamp, $acces, $others);
         }
 
         if(isSet($infosChamp["display"])){
@@ -470,15 +471,24 @@ class _field {
 
         // Si le tableau des paramètres de l'input est complété
         if(!empty($this->get("input"))) {
+
+            // On prépare le nom de l'input en fonction de la présence d'éléments dans infoChamps
+            if(isSet($infosChamp["prefix_name"])){
+                $name = $infosChamp["prefix_name"]."_".$this->get("input")["name"];
+            }
+            else {
+                $name = $this->get("input")["name"];
+            }
+
             // On met en place le label correspondant au champ
-            $divInputGlobal = '<div id="div_' . $this->get("name") . '" class="div_input_form">';
-            $labelPrincipal = '<label for="' . $this->get("name") . '">' . $this->get("libelle") . ' : </label>';
+            $divInputGlobal = '<div id="div_' . $name . '" class="div_input_form">';
+            $labelPrincipal = '<label for="' . $name . '">' . $this->get("libelle") . ' : </label>';
 
             // On recupère le type d'input du champ et on réalise le traitement adéquat
             switch ($this->get("input")["type"]) {
                 // Si on est sur un select
                 case 'select':
-                    $inputPrincipal = '<select name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '">';
+                    $inputPrincipal = '<select name="' . $name . '" id="' . $this->get("input")["id"] . '">';
                     
                     // Si on a un niveau d'accès au champ défini, on le spécifie sur le select (un peu différent)
                     $accesSelect = ((!empty($acces)) ? 'disabled' : "");
@@ -511,7 +521,7 @@ class _field {
                     break;
                 //Si on est sur un textarea
                 case 'textarea':
-                    $inputPrincipal = '<textarea name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '"';
+                    $inputPrincipal = '<textarea name="' . $name . '" id="' . $this->get("input")["id"] . '"';
                     // Si on a une longueur maximale de champ
                     if(isSet($this->get("contraintes")["max_length"])){
                         $inputPrincipal .= 'maxlenght="' . $this->get("contraintes")["max_length"] . '" ';
@@ -534,8 +544,11 @@ class _field {
                     // On enclenche un compteur pour gérer les id
                     $i = 0;
                     foreach ($this->get("listCleValeur") as $key => $value) {
-                        $choixRadio = '<input type="radio" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . $i . '" value="'.$key.'">';
-                        $choixRadio .= '<label for="' . $this->get("input")["id"] . $i . '">' . $value . '</label>';
+                        // On indique le paramètre checked de l'option si elle correspond à la valeur du champ
+                        $checked = ($this->get("value") === strval($key)) ? "checked" : "";
+
+                        $choixRadio = '<input type="radio" name="' . $name . '" id="' . $name . $i . '" value="'.$key.'" '.$acces.' '.$checked.'>';
+                        $choixRadio .= '<label for="' . $name . $i . '">' . $value . '</label>';
                         
                         $templateHTML .= '<div>'.$choixRadio.'</div>';
                         $i++;
@@ -545,7 +558,7 @@ class _field {
                     break;
                 case 'hidden':
                     // On construit le champ
-                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '" ';
+                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $name . '" id="' . $this->get("input")["id"] . '" ';
 
                     // Si on a une valeur pour le champ
                     if(!empty($this->getValue())){
@@ -563,7 +576,7 @@ class _field {
                     // On initialise les template HTML
                     $inputContraintes = "";
                     // On construit le champ
-                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '" ';
+                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $name . '" id="' . $this->get("input")["id"] . '" ';
                     // Si on a une valeur maximale de champ
                     if(isSet($this->get("input")["accept"])){
                         $inputContraintes .= 'accept="' . $this->get("input")["accept"] . '" ';
@@ -576,7 +589,7 @@ class _field {
                     // On initialise les template HTML
                     $inputContraintes = "";
                     // On construit le champ
-                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . '" id="' . $this->get("input")["id"] . '" ';
+                    $inputPrincipal = '<input type="' . $this->get("input")["type"] . '" name="' . $name . '" id="' . $this->get("input")["id"] . '" ';
 
                     // Ajout des contrôles sur le champ
                     // Si on a une longueur maximale de champ
@@ -616,8 +629,8 @@ class _field {
 
                     // Si le champ a besoin d'une confirmation
                     if($this->get("input")["confirmationNeeded"] === true){
-                        $labelConfirm = '<label for="' . $this->get("name") . 'Confirm"> Confirmation : </label>';
-                        $inputConfirm = '<input type="' . $this->get("input")["type"] . '" name="' . $this->get("input")["name"] . 'Confirm" id="' . $this->get("input")["id"] . 'Confirm" ';
+                        $labelConfirm = '<label for="' . $name . 'Confirm"> Confirmation : </label>';
+                        $inputConfirm = '<input type="' . $this->get("input")["type"] . '" name="' . $name . 'Confirm" id="' . $this->get("input")["id"] . 'Confirm" ';
                         // On construit le template
                         $templateHTML .= '<div>'.$labelConfirm.$inputConfirm.$inputContraintes.$inputValue.$acces.'></div>';
                     }

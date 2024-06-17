@@ -970,10 +970,33 @@ main#page_form_utilisateur form > div.buttonForm {
 }
 
 /********** Page du formulaire pizza ***********/
+main#page_form_pizza {
+  padding-bottom: 40px;
+}
+main#page_form_pizza table {
+  width: 100%;
+  background-color: var(--secondColor);
+  border-radius: var(--radiusLarge);
+  margin-top: var(--gouttiere);
+  margin-bottom: var(--gouttiere);
+}
+main#page_form_pizza table tr td {
+  padding: 10px;
+}
+main#page_form_pizza table tr td.dosage {
+  letter-spacing: 1rem;
+  font-weight: 700;
+}
+main#page_form_pizza table tr td div {
+  height: 50px;
+}
+main#page_form_pizza table tr td div img {
+  height: 100%;
+}
 main#page_form_pizza form {
   justify-content: space-between;
   padding: 40px;
-  margin: 40px 0;
+  margin: 40px 0 0 0;
 }
 main#page_form_pizza form > div {
   width: 45%;
@@ -1017,6 +1040,24 @@ main#page_form_pizza #formComposition form > div#div_c_ref_ingredient {
 main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div {
   width: 20%;
 }
+main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div .div_input_form {
+  margin-top: 10px;
+  gap: 0;
+  justify-content: space-between;
+}
+main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div .div_input_form div {
+  width: 10%;
+  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div .div_input_form div label {
+  font-size: 1rem;
+  color: var(--secondColor);
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
 main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div label {
   text-align: center;
   display: flex;
@@ -1034,24 +1075,6 @@ main#page_form_pizza #formComposition form > div#div_c_ref_ingredient > div div.
   color: black;
   text-shadow: none;
   margin-top: 10px;
-}
-main#page_form_pizza #div_c_dosage_ingredient {
-  margin-top: 10px;
-  gap: 0;
-  justify-content: space-between;
-}
-main#page_form_pizza #div_c_dosage_ingredient > div {
-  width: 10%;
-  gap: 10px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-main#page_form_pizza #div_c_dosage_ingredient > div label {
-  font-size: 1rem;
-  color: var(--secondColor);
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
 }
 
 /********** Page liste des pizzas ***********/

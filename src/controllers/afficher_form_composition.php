@@ -68,7 +68,8 @@ class afficher_form_composition extends _controller {
             [
                 "c_ref_ingredient" => ["autorised_value" => $this->parametres["type"]],
                 "c_dosage_ingredient" => ["display" => "none"]
-            ]
+            ],
+            ["idpizza" => $this->parametres["idpizza"]]
         );
 
         $this->makeRetour(true,"succes","ok");

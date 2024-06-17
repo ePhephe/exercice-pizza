@@ -408,12 +408,13 @@ class _model {
             $this->fields,
             $this->table,
             [$this->table => $this],
-            $this->partitionement,
-            [
-                "champ" => $this->champ_id,
-                "valeur" => $this->id,
-                "operateur" => "=",
-                "table" => $this->table
+            $this->partitionement,[
+                [
+                    "champ" => $this->champ_id,
+                    "valeur" => $this->id,
+                    "operateur" => "=",
+                    "table" => $this->table
+                ]
             ]
         );
 
@@ -475,9 +476,10 @@ class _model {
      * @param  string $action Action qui sera derrière le formulaire (create,read,update,delete)
      * @param  boolean $json Traitement du formulaire en ajax (True ou False - Valeur par défaut)
      * @param  array $listInput Liste de champs spécifiques attendus (Tableau vide - Valeur par défaut)
+     * @param  array $others Autres paramètres supplémentaires à utiliser
      * @return mixed Code HTML ou false s'il y a une erreur
      */
-    function getFormulaire($action, $json=false, $withButton=true, $paramAction =[], $listInput=[]){
+    function getFormulaire($action, $json=false, $withButton=true, $paramAction =[], $listInput=[], $others = []){
         // On initialise le template HTML
         $templateHTML = '';
         // Quelle vision des champ (vide, readonly, disabled)
@@ -568,7 +570,7 @@ class _model {
                 }
             }
             
-            $templateInputHTML .= $field->getElementFormulaire($input, $acces);
+            $templateInputHTML .= $field->getElementFormulaire($input, $acces, $others);
         }
 
         // On construit le formulaire

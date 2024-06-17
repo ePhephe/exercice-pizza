@@ -20,7 +20,10 @@
         echo $parametres["htmlFormulaire"];
 
         // Liste de la composition s'il y a
-        if(!empty($parametres["arrayCompositionPizza"])) echo $parametres["arrayCompositionPizza"];
+        if(!empty($parametres["arrayCompositionPizza"])) {
+            // Fragment pour l'affichage de la compostion
+            include_once("src/templates/fragments/composition_pizza.php");
+        }
 
         // Liste de la composition s'il y a
         if(!empty($parametres["id"])) {

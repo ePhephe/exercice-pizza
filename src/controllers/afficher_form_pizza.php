@@ -84,7 +84,8 @@ class afficher_form_pizza extends _controller {
             // Listing de la composition de la pizza
             $this->paramSortie["arrayCompositionPizza"] = $objPizza->get_composition();
 
-            
+            // Prix de la pizza
+            $this->paramSortie["prixPizza"] = $objPizza->get_prix_total();
 
             return true;
         }
