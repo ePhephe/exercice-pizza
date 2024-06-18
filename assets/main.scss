@@ -159,6 +159,11 @@ main#template_form_connexion {
         padding: var(--gouttiere);
         box-shadow: 0px 0px 10px black;
 
+        @media all and (max-width : $maxWidthMedium) {
+            height: auto;
+            flex-direction: column;
+        }
+
         form {
             width: 30%;
             display: flex;
@@ -166,6 +171,13 @@ main#template_form_connexion {
             justify-content: center;
             padding: 0;
             gap: var(--gouttiere);
+            @media all and (max-width : $maxWidthMedium) {
+                width: 100%;
+                input[type=submit] {
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+            }
         }
         .lien_mdp_oublie {
             width: 100%;
@@ -193,12 +205,25 @@ main#accueil {
 main#page_form_utilisateur {
     height: calc(100vh - 100px);
 
+    @media all and (max-width : $maxWidthMedium) {
+        height: auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
     form {
         justify-content: space-between;
         width: 80%;
 
+        @media all and (max-width : $maxWidthMedium) {
+            width: 100%;
+        }
+
         >div {
             width: 45%;
+            @media all and (max-width : $maxWidthMedium) {
+                width: 100%;
+            }
             &.buttonForm {
                 width: 100%;
             }
@@ -223,6 +248,14 @@ main#page_form_pizza {
                 &.dosage {
                     letter-spacing: 1rem;
                     font-weight: 700;
+                    @media all and (max-width : $maxWidthSmall) {
+                        letter-spacing: 0rem;
+                    }
+                }
+                &.type {
+                    @media all and (max-width : $maxWidthSmall) {
+                        display: none;
+                    }
                 }
                 div {
                     height: 50px;
@@ -242,12 +275,22 @@ main#page_form_pizza {
         >div {
             width: 45%;
 
+            @media all and (max-width : $maxWidthMedium) {
+                width: 100%;
+            }
+
             &#div_p_nom {
                 width: 25%;
+                @media all and (max-width : $maxWidthMedium) {
+                    width: 100%;
+                }
             }
 
             &#div_p_description {
                 width : 70%;
+                @media all and (max-width : $maxWidthMedium) {
+                    width: 100%;
+                }
             }
         }
     }
@@ -257,15 +300,33 @@ main#page_form_pizza {
         border-radius: var(--radiusLarge);
         padding: 10px;
 
-        li {
-            font-size: 1.2rem;
+        ul {
+            @media all and (max-width : $maxWidthSmall) {
+                display: flex;
+                flex-wrap: wrap;
+            }
         }
 
-        .separateur_etapes_pizza {
-            font-family: "Pacifico";
-            font-size: 1.5rem;
-            color: var(--secondColor);
+        li {
+            font-size: 1.2rem;
+
+            @media all and (max-width : $maxWidthSmall) {
+                width: 45%;
+            }
+            &.separateur_etapes_pizza {
+                font-family: "Pacifico";
+                font-size: 1.5rem;
+                color: var(--secondColor);
+
+                @media all and (max-width : $maxWidthSmall) {
+                    width: 5%;
+                }
+            }
+
+            
         }
+
+        
     }
 
     #formComposition {
@@ -289,6 +350,14 @@ main#page_form_pizza {
 
                     >div {
                         width: 20%;
+
+                        @media all and (max-width : $maxWidthMedium) {
+                            width: 30%;
+                        }
+
+                        @media all and (max-width : $maxWidthSmall) {
+                            width: 45%;
+                        }
 
                         .div_input_form {
                             margin-top: 10px;
@@ -341,6 +410,8 @@ main#page_form_pizza {
 
 /********** Page liste des pizzas ***********/
 #page_liste_pizza{ 
+    padding-bottom: 40px;
+
     h1 {
         text-align: center;
         width: 100%;
@@ -353,7 +424,6 @@ main#page_form_pizza {
     }
 
     article {
-        width: 30%;
         background-color: var(--secondColor);
         position: relative;
         border-radius: var(--radiusMedium);
@@ -378,7 +448,6 @@ main#page_form_pizza {
 
         >div {
             padding: var(--gouttiere);
-            height: 300px;
 
             p {
                 font-size: 0.8rem;
@@ -392,4 +461,8 @@ main#page_form_pizza {
             }
         }
     }
+}
+
+@media all and (max-width : $maxWidthMedium) {
+
 }
